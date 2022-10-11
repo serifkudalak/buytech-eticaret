@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Buytech.Eticaret.Core.Model.Entity.Order>
+
+<h2>Siparişler</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Ad Soyad
+                </th>
+                <th>
+                    Toplam Fiyat
+                </th>
+                <th>
+                    Sipariş Tarihi
+                </th>
+                <th>
+                    Sipariş Durum
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.NameSurname)
+                </td>
+                <td>
+                    @item.TotalPrice.ToString("##,##TL")
+                </td>
+                <td>
+                    @item.CreateDate.ToString("dd.MM.yyyy HH:mm")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Düzenle", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Detay", "Details", new { id = item.ID })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

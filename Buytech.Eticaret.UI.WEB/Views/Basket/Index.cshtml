@@ -1,0 +1,732 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.UserBasketAllDetail
+
+@section Style {
+    <link rel="stylesheet" href="~/Content/css/basket.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+}
+
+@section Script {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+}
+
+
+@{
+    decimal altTotal = 0;
+    decimal tax = 0;
+    decimal total = 0;
+    decimal totalTax = 0;
+    decimal halfTotalTax = 0;
+    decimal total2 = 0;
+    int count = 0;
+
+    foreach (var item in Model.Baskets)
+    {
+        count = item.Quantity;
+        tax = (item.Product.Tax * count);
+        totalTax += (item.Product.Tax * count);
+
+        if (item.Product.IsOpportunity == true)
+        {
+            altTotal += (count * item.Product.Discount) - tax;
+        }
+        else
+        {
+            altTotal += (count * item.Product.Price) - tax;
+        }
+    }
+
+    halfTotalTax = totalTax / 2;
+    total = totalTax + altTotal;
+    total2 = total - halfTotalTax;
+}
+
+<!-- Basket Start -->
+<section id="basket" class="cover">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    if (Session["LoginUser"] != null)
+                    {
+                        if (ViewBag.Count == 0)
+                        {
+                            <p class="basket-box" style="font-size: 1.6rem; font-weight: 900; text-align: center;">Sepette Ürün Bulunamadı!</p>
+                        }
+                        else
+                        {
+                            <!-- Progress bar -->
+                            <div class="progressbar">
+                                <div class="progress" id="progress"></div>
+                                <div class="progress-step progress-step-active"><i class="fas fa-shopping-cart"></i></div>
+                                <div class="progress-step"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="progress-step"><i class="fas fa-credit-card"></i></div>
+                            </div>
+
+                            <!-- Steps -->
+                            <div class="form-step form-step-active">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-8 mb-manuel-992">
+                                        <div class="basket-box">
+                                            <div class="basket-title">
+                                                <a href="/" class="back-btn">Alışverişe Dön</a>
+                                            </div>
+                                            <div class="basket-body">
+                                                <div class="table-wrapper">
+                                                    <div class="scrollable">
+                                                        <table class="products-basket">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="2">Ürünler</th>
+                                                                    <th>Adet</th>
+                                                                    <th>Tutar</th>
+                                                                    <th>Sil</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var item in Model.Baskets)
+                                                                {
+                                                                    <tr>
+                                                                        <td>
+                                                                            <img src="~/Content/img/products/@item.Product.Category.Name.Replace(" ", "_").ToLower()/@item.Product.Model/main.jpg">
+                                                                        </td>
+                                                                        <td style="text-align: left !important;">
+                                                                            @item.Product.Name
+                                                                        </td>
+                                                                        <td>@item.Quantity</td>
+                                                                        @if (item.Product.IsOpportunity == true)
+                                                                        {
+                                                                            <td>@item.Product.Discount.ToString("##,##TL")</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>@item.Product.Price.ToString("##,##TL")</td>
+                                                                        }
+
+                                                                        <td>
+                                                                            <button style="border: none !important; outline: !important; background: none !important;" id="btnDelete" data-delete="@item.ID">
+                                                                                <i class="fas fa-trash-alt trash-icon"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-4">
+                                        <div class="basket-box">
+                                            <div class="basket-detail-title">
+                                                <h5 class="detail-title">Sipariş Detayı</h5>
+                                            </div>
+                                            <div class="basket-detail-body">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Ara Toplam</td>
+                                                            <td>@altTotal.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>KDV</td>
+                                                            <td>@totalTax.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Genel Toplam</td>
+                                                            <td>@total.ToString("##,##TL")</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="basket-detail-footer">
+                                                <button type="button" class="btn-form-basket btn-next">
+                                                    Sepeti
+                                                    Onayla
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-step">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-8 mb-manuel-992">
+                                        <div class="basket-box">
+                                            <div class="address-title-box">
+                                                <h3 class="address-title">Adres Bilgileri</h3>
+                                                <p class="address-detail">
+                                                    Teslimat için tüm alanları eksiksiz doldurunuz.
+                                                </p>
+                                            </div>
+                                            <div class="address-detail-box">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">İsim Soyisim</label>
+                                                            <input type="text" class="form-manuel required" id="nameSurname"
+                                                                   name="nameSurname" disabled value="@if (!String.IsNullOrEmpty(Model.Users.NameSurname)) { @Model.Users.NameSurname }">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">E-mail</label>
+                                                            <input type="email" class="form-manuel required" id="email"
+                                                                   name="email" disabled autocomplete="off" value="@if (!String.IsNullOrEmpty(Model.Users.Email)) { @Model.Users.Email}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Şehir</label>
+                                                            <input type="text" class="form-manuel required" id="city"
+                                                                   name="city" disabled value="@if (!String.IsNullOrEmpty(Model.Users.City)) { @Model.Users.City}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">İlçe</label>
+                                                            <input type="text" class="form-manuel required" id="town"
+                                                                   name="town" disabled value="@if (!String.IsNullOrEmpty(Model.Users.Town)) { @Model.Users.Town}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Adres</label>
+                                                            <textarea class="form-manuel required" name="address" disabled
+                                                                      id="address">@if (!String.IsNullOrEmpty(Model.Users.Address)) { @Model.Users.Address}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Posta Kodu</label>
+                                                            <input type="text" class="form-manuel required" id="postalCode" disabled
+                                                                   name="postalCode" value="@if (!String.IsNullOrEmpty(Model.Users.PostalCode)) { @Model.Users.PostalCode}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Cep Telefonu</label>
+                                                            <input type="text" class="form-manuel required" id="phoneNumber" disabled
+                                                                   name="phoneNumber" placeholder="(___) ___ - __ __" value="@if (!String.IsNullOrEmpty(Model.Users.Phone)) { @Model.Users.Phone}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <a href="/kullanici/profilim/bilgiler/@Model.Users.ID" class="btn btn-save">Adres Güncelle</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-4">
+                                        <div class="basket-box basket-box-position">
+                                            <div class="basket-detail-title">
+                                                <h5 class="detail-title">Sipariş Detayı</h5>
+                                            </div>
+                                            <div class="basket-detail-body">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Ara Toplam</td>
+                                                            <td>@altTotal.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>KDV</td>
+                                                            <td>@totalTax.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Genel Toplam</td>
+                                                            <td>@total.ToString("##,##TL")</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="basket-detail-footer">
+                                                <button type="button"
+                                                        class="btn-form-basket btn-next btn-form-basket-required"
+                                                        disabled>
+                                                    Sepeti
+                                                    Onayla
+                                                </button>
+                                                <div>
+                                                    <a class="btn-form-prev btn-prev" title="Geri Gel">
+                                                        <i class="fas fa-long-arrow-alt-left left-icon"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-step">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-8 mb-manuel-992">
+                                        <div class="basket-box">
+                                            <div class="price-title-box">
+                                                <h3 class="price-title">Ödeme Şekli</h3>
+                                            </div>
+                                            <div class="price-detail-box-title mb-4">
+                                                <a id="one" class="price-detail-btn">Kredi Kartı</a>
+                                                <a id="two" class="price-detail-btn">Bakiye</a>
+                                            </div>
+                                            <div class="price-detail-box-body">
+                                                <div class="price-detail-p active" id="one-box">
+                                                    <div class="price-box">
+                                                        <p style="font-weight: 600;">Kredi kartı ile ödemelerinizi normal şekilde gerçekleştirebilirsiniz. 
+                                                        Fakat sizlere sunduğumuz bakiye sistemi ile ödemede KDV'nin yarısından kesilmektedir. 
+                                                        Sizde bu indirimden faydalanabilmek için bakiye sistemi ile ödemelerinizi gerçekleştirebilirsiniz.</p>
+                                                        @*<div class="price-detail-box">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Kart Numarası</label>
+                                                                        <input type="text" class="cc-number-input form-manuel"
+                                                                               id="cardNumber" name="cardNumber"
+                                                                               maxlength="19">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">
+                                                                            Kart Üzerindeki
+                                                                            İsim
+                                                                        </label>
+                                                                        <input type="text" class="form-manuel" id="cardName"
+                                                                               name="cardName">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Ay/Yıl</label>
+                                                                        <input type="text" class="cc-expiry-input form-manuel"
+                                                                               id="cardMonth" name="cardMonth" maxlength="5">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">
+                                                                            Kart Güvenlik Kodu
+                                                                            (CVC)
+                                                                        </label>
+                                                                        <input type="text" class="cc-cvc-input form-manuel"
+                                                                               id="securityCode" name="securityCode"
+                                                                               maxlength="3">
+                                                                        <span class="cvcDetail">CVC Nedir?</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>*@
+                                                    </div>
+                                                </div>
+                                                <div class="price-detail-p" id="two-box">
+                                                    <div class="price-box">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-lg-7 mb-btn-768">
+                                                                <div class="balance">
+                                                                    <span class="balance-detail">Mevcut Bakiyeniz: </span>
+                                                                    <span class="balance-price">@Model.Users.Balance.ToString("##,##TL")</span>
+                                                                    <p class="balance-alt-title">
+                                                                        (Var olan bakiyeniz ile
+                                                                        ödemenizi gerçekleştirebilirsiniz.)
+                                                                    </p>
+                                                                </div>
+                                                                <div class="balance-btn-box">
+                                                                    <a href="/profilim/bakiye-yukle/d/@Model.Users.TransferNumber/@Model.Users.ID" class="btn-form-balance">Para Yükle</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-5">
+                                                                <div class="info">
+                                                                    <div class="info-box">
+                                                                        <i class="fas fa-info-circle info-icon"></i>
+                                                                    </div>
+                                                                    <div class="info-detail-box">
+                                                                        <p class="info-text">
+                                                                            Bakiye ile yaptığınız her
+                                                                            ödemede KDV’nin yarısından düşülmektedir.
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-4">
+                                        <div class="basket-box basket-box-position">
+                                            <div class="basket-detail-title">
+                                                <h5 class="detail-title">Sipariş Detayı</h5>
+                                            </div>
+                                            <div class="basket-detail-body">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Ara Toplam</td>
+                                                            <td>@altTotal.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>KDV</td>
+                                                            <td>@totalTax.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr id="discount-balance">
+                                                            <td>Bakiye İndirimi</td>
+                                                            <td>@halfTotalTax.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr id="none-discount-total-price">
+                                                            <td>Genel Toplam</td>
+                                                            <td>@total.ToString("##,##TL")</td>
+                                                        </tr>
+                                                        <tr id="discount-total-price">
+                                                            <td>Genel Toplam</td>
+                                                            <td>@total2.ToString("##,##TL")</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <input type="hidden" id="totalProductPrice" value="@total2"/>
+                                                <input type="hidden" id="userBalance" value="@Model.Users.Balance"/>
+                                            </div>
+                                            <div class="basket-detail-footer">
+                                                <a href="/kredi-karti-ile-odeme/c/s/siparis-olustur" id="btn-payment-1" class="btn-form-basket">Kredi Kartı İle Öde</a>
+                                                <a href="/bakiye-ile-odeme/b/s/siparis-olustur" id="btn-payment-2" class="btn-form-basket btn-discount-basket">Bakiye İle Öde<span id="btn-discount-alt-text" class="btn-discount-alt">(Bakiye Yetersiz)</span></a>
+                                                <div>
+                                                    <a class="btn-form-prev btn-prev" title="Geri Gel">
+                                                        <i class="fas fa-long-arrow-alt-left left-icon"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    }
+                    else
+                    {
+                        <p class="basket-box" style="font-size: 1.6rem; font-weight: 900; text-align: center;">Sepetinizi Görebilmek İçin <a href="/giris-yap" style="color: #ED2846;">Giriş</a> Yapmalısınız.</p>
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Basket End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        var totalProductPrice = $('#totalProductPrice').val();
+        var userBalance = $('#userBalance').val();
+
+        if (parseFloat(totalProductPrice) > parseFloat(userBalance)) {
+            document.getElementById('btn-payment-2').classList.add('btn-discount-basket-disabled');
+            document.getElementById('btn-discount-alt-text').classList.add('d-block');
+            document.getElementById('btn-discount-alt-text').classList.remove('d-none');
+        }
+        else {
+            document.getElementById('btn-discount-alt-text').classList.add('d-none');
+            document.getElementById('btn-discount-alt-text').classList.remove('d-block');
+            document.getElementById('btn-payment-2').classList.remove('btn-discount-basket-disabled');
+        }
+    </script>
+
+    <script type="text/javascript">
+        const isNumericInput = (event) => {
+            const key = event.keyCode;
+            return ((key >= 48 && key <= 57) || // Allow number line
+                (key >= 96 && key <= 105) // Allow number pad
+            );
+        };
+
+        const isModifierKey = (event) => {
+            const key = event.keyCode;
+            return (event.shiftKey === true || key === 35 || key === 36) || // Allow Shift, Home, End
+                (key === 8 || key === 9 || key === 13 || key === 46) || // Allow Backspace, Tab, Enter, Delete
+                (key > 36 && key < 41) || // Allow left, up, right, down
+                (
+                    // Allow Ctrl/Command + A,C,V,X,Z
+                    (event.ctrlKey === true || event.metaKey === true) &&
+                    (key === 65 || key === 67 || key === 86 || key === 88 || key === 90)
+                )
+        };
+
+        const enforceFormat = (event) => {
+            // Input must be of a valid number format or a modifier key, and not longer than ten digits
+            if (!isNumericInput(event) && !isModifierKey(event)) {
+                event.preventDefault();
+            }
+        };
+
+        const formatToPhone = (event) => {
+            if (isModifierKey(event)) { return; }
+
+            const input = event.target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+            const areaCode = input.substring(0, 3);
+            const middle = input.substring(3, 6);
+            const last = input.substring(6, 10);
+
+            if (input.length > 6) { event.target.value = `(${areaCode}) ${middle} - ${last}`; }
+            else if (input.length > 3) { event.target.value = `(${areaCode}) ${middle}`; }
+            else if (input.length > 0) { event.target.value = `(${areaCode}`; }
+        };
+
+        const inputElement = document.getElementById('phoneNumber');
+        inputElement.addEventListener('keydown', enforceFormat);
+        inputElement.addEventListener('keyup', formatToPhone);
+    </script>
+
+    <script src="~/Content/js/basket-progress.js"></script>
+
+    <script type="text/javascript">
+        var result = 0;
+         var _detail = [];
+        _detail[0] = $('#nameSurname').val();
+        _detail[1] = $('#email').val();
+        _detail[2] = $('#city').val();
+        _detail[3] = $('#town').val();
+        _detail[4] = document.getElementById("address").value;
+        _detail[5] = $('#postalCode').val();
+        _detail[6] = $('#phoneNumber').val();
+
+        for (var i = 0; i < _detail.length; i++) {
+            if (_detail[i] == '') {
+                result += 1;
+            }
+        }
+
+        if (result != 0) {
+            $('.btn-form-basket-required').prop("disabled", true);
+        }
+        else {
+            $('.btn-form-basket-required').prop("disabled", false);
+        }
+    </script>
+
+    <script type="text/javascript">
+        $('.btn-next').on('click', function () {
+            var currentStepNum = $('#checkout-progress').data('current-step');
+            var nextStepNum = (currentStepNum + 1);
+            var currentStep = $('.step.step-' + currentStepNum);
+            var nextStep = $('.step.step-' + nextStepNum);
+            var progressBar = $('#checkout-progress');
+            $('.btn-prev').removeClass('disabled');
+            if (currentStepNum == 5) {
+                return false;
+            }
+            if (nextStepNum == 5) {
+                $(this).addClass('disabled');
+            }
+            $('.checkout-progress').removeClass('.step-' + currentStepNum).addClass('.step-' + (currentStepNum + 1));
+
+            currentStep.removeClass('active').addClass('valid');
+            currentStep.find('span').addClass('opaque');
+            currentStep.find('.fa.fa-check').removeClass('opaque');
+
+            nextStep.addClass('active');
+            progressBar.removeAttr('class').addClass('step-' + nextStepNum).data('current-step', nextStepNum);
+        });
+
+
+        $('.btn-prev').on('click', function () {
+            var currentStepNum = $('#checkout-progress').data('current-step');
+            var prevStepNum = (currentStepNum - 1);
+            var currentStep = $('.step.step-' + currentStepNum);
+            var prevStep = $('.step.step-' + prevStepNum);
+            var progressBar = $('#checkout-progress');
+            $('.btn-next').removeClass('disabled');
+            if (currentStepNum == 1) {
+                return false;
+            }
+            if (prevStepNum == 1) {
+                $(this).addClass('disabled');
+            }
+            $('.checkout-progress').removeClass('.step-' + currentStepNum).addClass('.step-' + (prevStepNum));
+
+            currentStep.removeClass('active');
+            prevStep.find('span').removeClass('opaque');
+            prevStep.find('.fa.fa-check').addClass('opaque');
+
+            prevStep.addClass('active').removeClass('valid');
+            progressBar.removeAttr('class').addClass('step-' + prevStepNum).data('current-step', prevStepNum);
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('.price-detail-btn').first().addClass('active');
+
+        document.getElementById('discount-total-price').style.display = 'none';
+        document.getElementById('discount-balance').style.display = 'none';
+        document.getElementById('btn-payment-2').style.display = 'none';
+
+        $('.price-detail-btn').click(function () {
+            var elClass = $(this).attr('id');
+
+            if (elClass === 'one') {
+                document.getElementById('one-box').classList.add('active');
+                document.getElementById('two-box').classList.remove('active');
+                document.getElementById('one').classList.add('active');
+                document.getElementById('two').classList.remove('active');
+
+                document.getElementById('none-discount-total-price').style.display = 'table-row';
+                document.getElementById('discount-total-price').style.display = 'none';
+                document.getElementById('discount-balance').style.display = 'none';
+                document.getElementById('btn-payment-1').style.display = 'inline-block';
+                document.getElementById('btn-payment-2').style.display = 'none';
+            }
+            else {
+                document.getElementById('two-box').classList.add('active');
+                document.getElementById('one-box').classList.remove('active');
+                document.getElementById('two').classList.add('active');
+                document.getElementById('one').classList.remove('active');
+
+                document.getElementById('none-discount-total-price').style.display = 'none';
+                document.getElementById('discount-total-price').style.display = 'table-row';
+                document.getElementById('discount-balance').style.display = 'table-row';
+                document.getElementById('btn-payment-1').style.display = 'none';
+                document.getElementById('btn-payment-2').style.display = 'inline-block';
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        let ccNumberInput = document.querySelector('.cc-number-input'),
+            ccNumberPattern = /^\d{0,16}$/g,
+            ccNumberSeparator = " ",
+            ccNumberInputOldValue,
+            ccNumberInputOldCursor,
+
+            ccExpiryInput = document.querySelector('.cc-expiry-input'),
+            ccExpiryPattern = /^\d{0,4}$/g,
+            ccExpirySeparator = "/",
+            ccExpiryInputOldValue,
+            ccExpiryInputOldCursor,
+
+            ccCVCInput = document.querySelector('.cc-cvc-input'),
+            ccCVCPattern = /^\d{0,3}$/g,
+
+            mask = (value, limit, separator) => {
+                var output = [];
+                for (let i = 0; i < value.length; i++) {
+                    if (i !== 0 && i % limit === 0) {
+                        output.push(separator);
+                    }
+
+                    output.push(value[i]);
+                }
+
+                return output.join("");
+            },
+            unmask = (value) => value.replace(/[^\d]/g, ''),
+            checkSeparator = (position, interval) => Math.floor(position / (interval + 1)),
+            ccNumberInputKeyDownHandler = (e) => {
+                let el = e.target;
+                ccNumberInputOldValue = el.value;
+                ccNumberInputOldCursor = el.selectionEnd;
+            },
+            ccNumberInputInputHandler = (e) => {
+                let el = e.target,
+                    newValue = unmask(el.value),
+                    newCursorPosition;
+
+                if (newValue.match(ccNumberPattern)) {
+                    newValue = mask(newValue, 4, ccNumberSeparator);
+
+                    newCursorPosition =
+                        ccNumberInputOldCursor - checkSeparator(ccNumberInputOldCursor, 4) +
+                        checkSeparator(ccNumberInputOldCursor + (newValue.length - ccNumberInputOldValue.length), 4) +
+                        (unmask(newValue).length - unmask(ccNumberInputOldValue).length);
+
+                    el.value = (newValue !== "") ? newValue : "";
+                } else {
+                    el.value = ccNumberInputOldValue;
+                    newCursorPosition = ccNumberInputOldCursor;
+                }
+
+                el.setSelectionRange(newCursorPosition, newCursorPosition);
+
+                highlightCC(el.value);
+            },
+            highlightCC = (ccValue) => {
+                let ccCardType = '',
+                    ccCardTypePatterns = {
+                        amex: /^3/,
+                        visa: /^4/,
+                        mastercard: /^5/,
+                        disc: /^6/,
+
+                        genric: /(^1|^2|^7|^8|^9|^0)/,
+                    };
+
+                for (const cardType in ccCardTypePatterns) {
+                    if (ccCardTypePatterns[cardType].test(ccValue)) {
+                        ccCardType = cardType;
+                        break;
+                    }
+                }
+
+                let activeCC = document.querySelector('.cc-types__img--active'),
+                    newActiveCC = document.querySelector(`.cc-types__img--${ccCardType}`);
+
+                if (activeCC) activeCC.classList.remove('cc-types__img--active');
+                if (newActiveCC) newActiveCC.classList.add('cc-types__img--active');
+            },
+            ccExpiryInputKeyDownHandler = (e) => {
+                let el = e.target;
+                ccExpiryInputOldValue = el.value;
+                ccExpiryInputOldCursor = el.selectionEnd;
+            },
+            ccExpiryInputInputHandler = (e) => {
+                let el = e.target,
+                    newValue = el.value;
+
+                newValue = unmask(newValue);
+                if (newValue.match(ccExpiryPattern)) {
+                    newValue = mask(newValue, 2, ccExpirySeparator);
+                    el.value = newValue;
+                } else {
+                    el.value = ccExpiryInputOldValue;
+                }
+            };
+
+        ccNumberInput.addEventListener('keydown', ccNumberInputKeyDownHandler);
+        ccNumberInput.addEventListener('input', ccNumberInputInputHandler);
+
+        ccExpiryInput.addEventListener('keydown', ccExpiryInputKeyDownHandler);
+        ccExpiryInput.addEventListener('input', ccExpiryInputInputHandler);
+    </script>
+
+    <script type="text/javascript">
+        $("body").on("click", "#btnDelete", function () {
+            var _product = {};
+            _product.productID = $(this).attr('data-delete');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("BasketDelete", "Basket")',
+                data: JSON.stringify(_product),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    if (r) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Ürün Sepetten Kaldırıldı!',
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Kapat',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ürün Sepetten Kaldırılamadı!',
+                            confirmButtonText: 'Kapat'
+                        })
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,86 @@
+﻿<!doctype html>
+<html lang="tr-TR">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">*@
+
+    <link rel="stylesheet" href="~/Areas/Admin/Content/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/style.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap">
+
+    <title>Admin | Kontrol</title>
+</head>
+<body>
+
+
+    <aside class="sidebar">
+        <div class="toggle">
+            <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+                <span></span>
+            </a>
+        </div>
+        <div class="side-inner">
+
+            <div class="profile">
+                <img src="~/Areas/Admin/Content/images/profile-user.jpg" alt="Image" class="img-fluid">
+                <h3 class="name">Admin</h3>
+            </div>
+
+            <div class="nav-menu">
+                <ul>
+                    <li class="active"><a href="/Admin"><span class="icon-home mr-3"></span>Anasayfa</a></li>
+                    <li><a href="/Admin/Users"><span class="icon-user mr-3"></span>Kullanıcı</a></li>
+                    <li><a href="/Admin/Categories"><span class="icon-add mr-3"></span>Kategoriler</a></li>
+                    <li><a href="/Admin/Products"><span class="icon-product-hunt mr-3"></span>Ürünler</a></li>
+                    <li><a href="/Admin/ProductImages"><span class="icon-product-hunt mr-3"></span>Ürün Görselleri</a></li>
+                    <li><a href="/Admin/ProductDetails"><span class="icon-product-hunt mr-3"></span>Ürün Detayları</a></li>
+                    <li><a href="/Admin/Orders"><span class="icon-car mr-3"></span>Sipariş İşlemleri</a></li>
+                    <li><a href="/Admin/Contacts"><span class="icon-subject mr-3"></span>Kullanıcı Mesajları</a></li>
+                    <li><a href="/admin-cikis-yap"><span class="icon-exit_to_app mr-3"></span>Çıkış Yap</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </aside>
+    <main>
+        <div class="site-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script src="~/Areas/Admin/Content/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Areas/Admin/Content/js/popper.min.js"></script>
+    <script src="~/Areas/Admin/Content/js/bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Content/js/main-2.js"></script>
+</body>
+</html>

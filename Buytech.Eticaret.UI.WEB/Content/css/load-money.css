@@ -1,0 +1,154 @@
+.load-money-title {
+    font-weight: 900;
+}
+
+.load-money-box {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .25);
+    padding: 5rem 7rem; 
+}
+
+.load-money-box .detail-text-box h2 {
+    font-size: 4rem;
+    max-width: min-content;
+}
+
+.load-money-box .detail-text-box h2 .title-black {
+    font-weight: 900;
+    color: #ED2846;
+}
+
+.load-money-box .load-money h4 {
+    font-weight: 900;
+    color: #ED2846;
+    font-size: 1.7rem;
+}
+
+.load-money-box .load-money p {
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+    margin-bottom: 30px;
+}
+
+.load-money-box .load-money .form-manuel {
+    background: transparent !important;
+    display: block;
+    padding: 30px;
+    width: 80%;
+    height: 48px;
+    border: none;
+    outline: none;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 1),
+                inset 4px 4px 10px rgba(0, 0, 0, 0.05),
+                inset -4px -4px 10px rgba(255, 255, 255, 1),
+                4px 4px 10px rgba(0, 0, 0, 0.05) !important;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.load-money-box .load-money .form-manuel::placeholder {
+    color: #828282;
+}
+
+.load-money-box .load-money .btn-load {
+    width: 80%;
+    padding: 10px;
+    background-color: #ED2846;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
+    border-radius: 0 !important;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.load-money-box .load-money .load-money-detail {
+    display: block;
+    margin-top: 20px;
+    font-weight: 500;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.load-money-box .load-money .load-money-detail span {
+    font-weight: 900;
+    color: #ED2846;
+}
+
+@media screen and (max-width: 1200px) {
+    .load-money-box {
+        padding: 5rem; 
+    }
+
+    .load-money-box .detail-text-box h2 {
+        font-size: 3.5rem;
+    }
+
+    .load-money-box .load-money .form-manuel {
+        width: 90%;
+    }
+    
+    .load-money-box .load-money .btn-load {
+        width: 90%;
+    }
+    
+    .load-money-box .load-money .load-money-detail {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .load-money-box .load-money .form-manuel {
+        width: 100%;
+    }
+    
+    .load-money-box .load-money .btn-load {
+        width: 100%;
+    }
+
+    .load-money-box .load-money .load-money-detail {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .load-money-box {
+        padding: 3rem; 
+    }
+
+    .load-money-box .detail-text-box h2 {
+        font-size: 3rem;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .load-money-box .detail-text-box h2 {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .load-money-box {
+        padding: 2rem; 
+    }
+
+    .load-money-box .detail-text-box h2 {
+        font-size: 2rem;
+    }
+
+    .load-money-box .load-money .load-money-detail {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .load-money-box .detail-text-box h2 {
+        font-size: 1.6rem;
+    }
+
+    .load-money-box .load-money .load-money-detail {
+        font-size: .7rem;
+    }
+}

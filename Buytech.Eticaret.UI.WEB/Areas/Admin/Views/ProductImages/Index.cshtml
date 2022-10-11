@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Buytech.Eticaret.Core.Model.Entity.ProductImage>
+
+<h2>Ürün Görselleri</h2>
+
+<p>
+    @Html.ActionLink("Ürün Görselleri Ekle", "Create")
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Ürün Adı
+                </th>
+                <th>
+                    Ürün Görselleri 1
+                </th>
+                <th>
+                    Ürün Görselleri 2
+                </th>
+                <th>
+                    Ürün Görselleri 3
+                </th>
+                <th>
+                    Ürün Görselleri 4
+                </th>
+                <th>
+                    Ürün Görselleri 5
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        @if (item.Image1 != null)
+                        {
+                            <img src="~/Content/img/products/@item.Product.Category.Name.Replace(" ", "_").ToLower()/@item.Product.Model/@item.Image1" style="width: 100px; height: 100px;" />
+                        }
+
+                    </td>
+                    <td>
+                        @if (item.Image2 != null)
+                        {
+                            <img src="~/Content/img/products/@item.Product.Category.Name.Replace(" ", "_").ToLower()/@item.Product.Model/@item.Image2" style="width: 100px; height: 100px;" />
+                        }
+
+                    </td>
+                    <td>
+                        @if (item.Image3 != null)
+                        {
+                            <img src="~/Content/img/products/@item.Product.Category.Name.Replace(" ", "_").ToLower()/@item.Product.Model/@item.Image3" style="width: 100px; height: 100px;" />
+                        }
+
+                    </td>
+                    <td>
+                        @if (item.Image4 != null)
+                        {
+                            <img src="~/Content/img/products/@item.Product.Category.Name.Replace(" ", "_").ToLower()/@item.Product.Model/@item.Image4" style="width: 100px; height: 100px;" />
+                        }
+
+                    </td>
+                    <td>
+                        @if (item.Image5 != null)
+                        {
+                            <img src="~/Content/img/products/@item.Product.Category.Name.Replace(" ", "_").ToLower()/@item.Product.Model/@item.Image5" style="width: 100px; height: 100px;" />
+                        }
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("Düzenle", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Detay", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Sil", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

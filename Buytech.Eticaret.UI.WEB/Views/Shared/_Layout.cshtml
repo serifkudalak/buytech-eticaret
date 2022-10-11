@@ -1,0 +1,240 @@
+﻿<!doctype html>
+<html lang="tr-TR">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="~/Content/css/login.css">
+
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Content/css/owl.theme.default.css">
+
+    @RenderSection("Style", false)
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap">
+
+    <title>BuyTech Bilişim | Teknolojinin 1 Numaralı Adresi</title>
+
+    @RenderSection("Script", false)
+</head>
+
+<body>
+    <!-- Header Start -->
+    <div class="page-wrap">
+        <div class="nav-style">
+            <div class="mobile-view">
+                <div class="mobile-view-header">
+                    <div class="mobile-view-close">
+                        <i class="fas fa-times times-icon js-toggle"></i>
+                    </div>
+                </div>
+                <div class="mobile-view-body">
+                    <ul class="clone-view">
+                        @{
+                            if (Session["LoginUser"] == null)
+                            {
+                                <li><a href="/giris-yap">Giriş Yap</a></li>
+                                <li><a href="/kayit-ol">Kayıt Ol</a></li>
+                            }
+                            else
+                            {
+                                var user = Session["LoginUser"] as Buytech.Eticaret.Core.Model.Entity.User;
+                                <li><a href="/kullanici/profilim/bilgiler/@user.ID">Profilim</a></li>
+                                <li><a href="/siparislerim">Siparişlerim</a></li>
+                                <li><a href="/sepetim">Sepetim</a></li>
+                                <li><a href="/para-transferi/a/@user.TransferNumber/@user.ID">Para Transferi</a></li>
+                                <li><a href="/profilim/bakiye-yukle/d/@user.TransferNumber/@user.ID">Bakiye Yükle</a></li>
+                            }
+                        }
+
+                        @Html.Action("GetMenu", "Home")
+
+                        @{
+                            if (Session["LoginUser"] != null)
+                            {
+                                <li><a href="/cikis-yap">Çıkış Yap</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <header>
+                <div class="top">
+                    <div class="container-lg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="top-nav">
+                                    <div class="row align-items-center">
+                                        <div class="col-xs-manuel-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                            <a href="/"><img src="~/Content/img/logo/logo.svg" class="logo-size"></a>
+                                        </div>
+                                        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-6 d-none-576-manuel">
+                                            <div class="search-form">
+                                                <div class="search-container">
+                                                    <form action="/aranan-urunler" autocomplete="off">
+                                                        <input type="text" class="searchbox"
+                                                               placeholder="Aramak istediğiniz ürünü yazınız..." name="search">
+                                                        <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-manuel-6 col-sm-2 col-md-2 col-lg-2 col-xl-4 d-flex justify-content-end aling-items-center">
+                                            <div class="bar-block d-none d-block-1200-manuel">
+                                                <i class="fas fa-bars js-toggle navigation-bars fa-2x" style="color: #ED2846"></i>
+                                            </div>
+                                            <div class="d-flex align-items-center d-none-1200-manuel">
+                                                <span class="button button-tooltips button-black button-partner me-3">
+                                                    <i class="fas fa-user me-1"></i>
+                                                    <span class="me-2">Giriş Yap</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                    <div class="button-tooltips-list">
+                                                        <ul>
+                                                            @{
+                                                                if (Session["LoginUser"] == null)
+                                                                {
+                                                                    <li><a href="/giris-yap">Giriş Yap</a></li>
+                                                                    <li><a href="/kayit-ol">Kayıt Ol</a></li>
+                                                                }
+                                                                else
+                                                                {
+                                                                    var user = Session["LoginUser"] as Buytech.Eticaret.Core.Model.Entity.User;
+                                                                    <li><a href="/kullanici/profilim/bilgiler/@user.ID">Profilim</a></li>
+                                                                    <li><a href="/siparislerim">Siparişlerim</a></li>
+                                                                    <li><a href="/para-transferi/a/@user.TransferNumber/@user.ID">Para Transferi</a></li>
+                                                                    <li><a href="/profilim/bakiye-yukle/d/@user.TransferNumber/@user.ID">Bakiye Yükle</a></li>
+                                                                    <li><a href="/cikis-yap">Çıkış Yap</a></li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                                @Html.Action("UserBasketTotal", "Home")
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-block-576-manuel py-3">
+                                            <div class="search-form">
+                                                <div class="search-container">
+                                                    <form action="/aranan-urunler" autocomplete="off">
+                                                        <input type="text" class="searchbox"
+                                                               placeholder="Aramak istediğiniz ürünü yazınız..." name="search">
+                                                        <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container d-none-1200-manuel">
+                    <div class="row">
+                        <div class="col-12 pt-4">
+                            <nav class="menus">
+                                <ul class="d-flex justify-content-between">
+                                    @Html.Action("GetMenu", "Home")
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    @RenderBody()
+
+    <!-- Footer Start -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-xl-4">
+                    <h3>buytech</h3>
+                    <ul class="detail-list">
+                        <li><a href="/hakkimizda">Hakkımızda</a></li>
+                        <li><a href="/iletisim">İletişim</a></li>
+                        <li><a href="/gizlilik-politikasi">Gizlilik Politikamız</a></li>
+                        <li><a href="/para-transferi-hakkinda">Para Transferi Hakkında</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-xl-5">
+                    <h3>kategoriler</h3>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <ul class="categories-list">
+                                <li><a href="/bilgisayar/1">Bilgisayar</a></li>
+                                <li><a href="/telefon/2">Telefon</a></li>
+                                <li><a href="/tablet/3">Tablet</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-5">
+                            <ul class="categories-list">
+                                <li><a href="/kamera/4">Kamera</a></li>
+                                <li><a href="/oyun/5">Oyun</a></li>
+                                <li><a href="/ofis-malzemeleri/6">Ofis Malzemeleri</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-3">
+                    <h3>sosyal medya</h3>
+                    <div class="middle">
+                        <a class="social-btn" href="#"><i class="fab fa-youtube social-icon"></i></a>
+                        <a class="social-btn" href="#"><i class="fab fa-twitter social-icon"></i></a>
+                        <a class="social-btn" href="#"><i class="fab fa-instagram social-icon"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="py-3 copyright">
+        <p class="copy-text">Copyright &copy; 2021 BuyTech Teknoloji A.Ş.</p>
+    </div>
+    <!-- Footer End -->
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <script type="text/javascript">
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    <script src="~/Content/js/all.min.js"></script>
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/owl.carousel.js"></script>
+    <script src="~/Content/js/script.js"></script>
+
+    @RenderSection("Script2", false)
+</body>
+
+</html>

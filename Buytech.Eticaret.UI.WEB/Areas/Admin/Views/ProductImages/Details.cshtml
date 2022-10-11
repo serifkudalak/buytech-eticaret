@@ -1,0 +1,77 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.ProductImage
+
+<h2>Ürün Görselleri</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Ürün Adı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+
+        <dt>
+            Ürün Görseli 1
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image1)
+        </dd>
+
+        <dt>
+            Ürün Görseli 2
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image2)
+        </dd>
+
+        <dt>
+            Ürün Görseli 3
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image3)
+        </dd>
+
+        <dt>
+            Ürün Görseli 4
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image4)
+        </dd>
+
+        <dt>
+            Ürün Görseli 5
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image5)
+        </dd>
+
+        <dt>
+            Kayıt Tarihi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            Güncelleme Tarihi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Geri Dön", "Index")
+</p>

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Buytech.Eticaret.Core.Model.Entity.Product>
+
+<h2>Ürünler</h2>
+
+<p>
+    @Html.ActionLink("Ürün Ekle", "Create")
+</p>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Ürün Görsel
+                </th>
+                <th>
+                    Ürün Adı
+                </th>
+                <th>
+                    Kategori Adı
+                </th>
+                <th>
+                    Marka
+                </th>
+                <th>
+                    Fiyat
+                </th>
+                <th>
+                    Vergi
+                </th>
+                <th>
+                    İndirimli Fiyat
+                </th>
+                <th>
+                    Aktiflik
+                </th>
+                <th>
+                    İndirimde Mi
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <img src="~/Content/img/products/@item.Category.Name.Replace(" ", "_").ToLower()/@item.Model/main.jpg" style="width: 100px; height: 100px;"/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsOpportunity)
+                </td>
+                <td>
+                    @Html.ActionLink("Düzenle", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Detay", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Sil", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

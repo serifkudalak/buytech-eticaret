@@ -1,0 +1,96 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.ProductImage
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Ürün Görsellerini Ekle</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Ürün ID</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("ProductID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Ürün Görseli 1</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Ürün Görseli 2</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Ürün Görseli 3</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image3, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Ürün Görseli 4</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image4, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image4, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Ürün Görseli 5</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image5, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image5, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Kayıt Tarihi</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

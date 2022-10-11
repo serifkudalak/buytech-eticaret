@@ -1,0 +1,159 @@
+﻿@section Style {
+    <link rel="stylesheet" href="~/Content/css/contact.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+}
+
+@section Script {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+}
+
+<!-- Contact Start -->
+<section id="contact">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <img src="~/Content/img/contact/contact.jpg" class="img-fluid">
+            </div>
+            <div class="col-lg-6">
+                <h2>İletişim</h2>
+                <form>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label">İsim Soyisim*</label>
+                                <input type="text" class="form-manuel" id="nameSurname" name="nameSurname" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label">E-mail*</label>
+                                <input type="email" class="form-manuel" id="email" name="email"
+                                       autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label">Konu*</label>
+                                <input type="text" class="form-manuel" id="subject" name="subject" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label">Telefon*</label>
+                                <input type="text" class="form-manuel" id="phoneNumber" name="phoneNumber"
+                                       placeholder="(___) ___ - __ __" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <label class="form-label">Mesaj*</label>
+                                <textarea class="form-manuel" name="message" id="message" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 btn-ml">
+                            <div class="mb-3">
+                                <button type="button" class="btn btn-send" id="btnAdd">Gönder</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        const isNumericInput = (event) => {
+            const key = event.keyCode;
+            return ((key >= 48 && key <= 57) || // Allow number line
+                (key >= 96 && key <= 105) // Allow number pad
+            );
+        };
+
+        const isModifierKey = (event) => {
+            const key = event.keyCode;
+            return (event.shiftKey === true || key === 35 || key === 36) || // Allow Shift, Home, End
+                (key === 8 || key === 9 || key === 13 || key === 46) || // Allow Backspace, Tab, Enter, Delete
+                (key > 36 && key < 41) || // Allow left, up, right, down
+                (
+                    // Allow Ctrl/Command + A,C,V,X,Z
+                    (event.ctrlKey === true || event.metaKey === true) &&
+                    (key === 65 || key === 67 || key === 86 || key === 88 || key === 90)
+                )
+        };
+
+        const enforceFormat = (event) => {
+            // Input must be of a valid number format or a modifier key, and not longer than ten digits
+            if (!isNumericInput(event) && !isModifierKey(event)) {
+                event.preventDefault();
+            }
+        };
+
+        const formatToPhone = (event) => {
+            if (isModifierKey(event)) { return; }
+
+            const input = event.target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+            const areaCode = input.substring(0, 3);
+            const middle = input.substring(3, 6);
+            const last = input.substring(6, 10);
+
+            if (input.length > 6) { event.target.value = `(${areaCode}) ${middle} - ${last}`; }
+            else if (input.length > 3) { event.target.value = `(${areaCode}) ${middle}`; }
+            else if (input.length > 0) { event.target.value = `(${areaCode}`; }
+        };
+
+        const inputElement = document.getElementById('phoneNumber');
+        inputElement.addEventListener('keydown', enforceFormat);
+        inputElement.addEventListener('keyup', formatToPhone);
+    </script>
+
+    <script type="text/javascript">
+        $("body").on("click", "#btnAdd", function () {
+            var _user = {};
+            _user.NameSurname = $("#nameSurname").val();
+            _user.Email = $("#email").val();
+            _user.Phone = $("#phoneNumber").val();
+            _user.Subject = $("#subject").val();
+            _user.Message = $("#message").val();
+
+            if (_user.NameSurname == '' || _user.Email == '' || _user.Phone == '' || _user.Subject == '' || _user.Message == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lütfen Alanları Eksiksiz Doldurun!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '/iletisim',
+                    data: JSON.stringify(_user),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        if (r) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Mesajınız Başarıyla İletildi!',
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Kapat',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Mesajınız İletilemedi!',
+                                confirmButtonText: 'Kapat'
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Buytech.Eticaret.Core.Model.Entity.User>
+
+<h2>Kullanıcılar</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Ad Soyad
+                </th>
+                <th>
+                    TC No
+                </th>
+                <th>
+                    E-mail
+                </th>
+                <th>
+                    Telefon
+                </th>
+                <th>
+                    Aktiflik
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameSurname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GlobalNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Düzenle", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Detay", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Sil", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>

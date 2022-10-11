@@ -1,0 +1,173 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.UserBasketAllDetail
+
+@section Style {
+    <link rel="stylesheet" href="~/Content/css/basket.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+}
+
+@section Script {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+}
+
+@{
+    decimal altTotal = 0;
+    decimal tax = 0;
+    decimal total = 0;
+    decimal totalTax = 0;
+    decimal halfTotalTax = 0;
+    decimal total2 = 0;
+    int count = 0;
+
+    foreach (var item in Model.Baskets)
+    {
+        count = item.Quantity;
+        tax = (item.Product.Tax * count);
+        totalTax += (item.Product.Tax * count);
+
+        if (item.Product.IsOpportunity == true)
+        {
+            altTotal += (count * item.Product.Discount) - tax;
+        }
+        else
+        {
+            altTotal += (count * item.Product.Price) - tax;
+        }
+    }
+
+    halfTotalTax = totalTax / 2;
+    total = totalTax + altTotal;
+    total2 = total - halfTotalTax;
+}
+
+
+<!-- Basket Start -->
+<section id="basket" class="cover">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <h3 style="font-weight: 900;">Ödemeyi Tamamla</h3>
+            </div>
+            <div class="col-md-12">
+                <form action="#" class="form">
+                    <!-- Steps -->
+                    <div class="form-step form-step-active">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-8 mb-manuel-992">
+                                <div class="basket-box">
+                                    <div class="basket-body">
+                                        <div class="table-wrapper">
+                                            <div class="scrollable">
+                                                <table class="products-basket">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2">Ürünler</th>
+                                                            <th>Adet</th>
+                                                            <th>Tutar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.Baskets)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <img src="~/Content/img/products/@item.Product.Category.Name.Replace(" ", "_").ToLower()/@item.Product.Model/main.jpg">
+                                                                </td>
+                                                                <td style="text-align: left !important;">
+                                                                    @item.Product.Name
+                                                                </td>
+                                                                <td>@item.Quantity</td>
+                                                                @if (item.Product.IsOpportunity == true)
+                                                                {
+                                                                    <td>@item.Product.Discount.ToString("##,##TL")</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@item.Product.Price.ToString("##,##TL")</td>
+                                                                }
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-4">
+                                <div class="basket-box">
+                                    <div class="basket-detail-title">
+                                        <h5 class="detail-title">Sipariş Detayı</h5>
+                                    </div>
+                                    <div class="basket-detail-body">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Ara Toplam</td>
+                                                    <td>@altTotal.ToString("##,##TL")</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>KDV</td>
+                                                    <td>@totalTax.ToString("##,##TL")</td>
+                                                </tr>
+                                                <tr id="discount-balance">
+                                                    <td>Bakiye İndirimi</td>
+                                                    <td>@halfTotalTax.ToString("##,##TL")</td>
+                                                </tr>
+                                                <tr id="discount-total-price">
+                                                    <td>Genel Toplam</td>
+                                                    <td>@total2.ToString("##,##TL")</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <input type="hidden" id="totalPrice" value="@total2" />
+                                    </div>
+                                    <div class="basket-detail-footer">
+                                        <button type="button" class="btn-form-basket btn-next paymentOrder">Öde</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Basket End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        $("body").on("click", ".paymentOrder", function () {
+            var _orderPayment = {};
+            _orderPayment.totalPrice = $('#totalPrice').val();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("BalancePayment", "Basket")',
+                data: JSON.stringify(_orderPayment),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    if (r) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Ödeme Tamamlandı!',
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Kapat',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "/siparislerim";
+                            }
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ödeme Tamamlanamadı!',
+                            confirmButtonText: 'Kapat'
+                        })
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,160 @@
+#products {
+    padding: 3rem 0 !important;
+}
+
+#products .products-title {
+    font-weight: 600;
+    color: #686868;
+    font-size: 2.5rem;
+}
+
+#products .products-detail {
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#products .products-detail span {
+    font-weight: 900;
+    color: #ED2846;
+}
+
+#products .select-box {
+    position: relative;
+}
+
+#products .select-box .down-arrow-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+}
+
+#products select {
+    background: transparent !important;
+    padding: 0 20px;
+    width: 100%;
+    height: 48px;
+    border: none;
+    outline: none;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 1),
+                inset 4px 4px 10px rgba(0, 0, 0, 0.05),
+                inset -4px -4px 10px rgba(255, 255, 255, 1),
+                4px 4px 10px rgba(0, 0, 0, 0.05) !important;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+#products select:focus {
+    border-color: white !important;
+}
+
+#products .brand-box, #products .price-box {
+    padding-top: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .25);
+}
+
+#products .brand-box .form-check {
+    margin: 8px 0;
+}
+
+#products .brand-box .form-check:first-child {
+    margin-top: 0 !important;
+}
+
+#products .brand-box .form-check:last-child {
+    margin-bottom: 0 !important;
+}
+
+#products .brand-box .form-check-label {
+    margin-top: 2px;
+    margin-left: 5px;
+    font-weight: 300;
+    font-size: 1.1rem;
+}
+
+#products .brand-box .form-check-input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #C6C2C2;
+    border-radius: 0;
+    padding: 10px;
+}
+
+#products .brand-box .form-check-input:checked {
+    background-color: #ED2846;
+}
+
+#products .brand-box .title-box, #products .price-box .title-box {
+    padding: 5px 0;
+    border-bottom: 2px solid rgba(198, 194, 194, .4);
+    width: 100%;
+}
+
+#products .brand-box .title-box h3, #products .price-box .title-box h3 {
+    font-weight: 300;
+    font-size: 1.4rem;
+}
+
+#products .brand-box .title-box, #products .price-box .title-box,
+#products .brand-box .body-list, #products .price-box .body-list {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#products .brand-box .body-list, #products .price-box .body-list {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#products .price-box input {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid rgba(198, 194, 194, .4);
+    outline: none;
+    font-weight: 600;
+}
+
+#products .price-box input::placeholder {
+    color: #C6C2C2;
+    font-weight: 300;
+} 
+
+#products .btn-filter {
+    width: 100%;
+    padding: 10px;
+    background-color: #ED2846;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
+    border-radius: 0 !important;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+#products .pagination-list li{
+    margin: 0 15px;
+}
+
+#products .pagination-list li a {
+    border-radius: 0 !important;
+    color: black;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
+}
+
+#products .pagination-list li.active a {
+    color: white;
+    background-color: #ED2846;
+}
+
+@media screen and (max-width: 992px) {
+    .col-sm-manuel {
+        flex: 0 0 auto;
+        width: 100% !important;
+    }
+}

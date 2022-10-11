@@ -1,0 +1,128 @@
+﻿<!-- Slider Start -->
+<section id="home">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-controls">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators"
+                        style="background-image: url('Content/img/index/samsung-telefon.jpg');" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators"
+                        style="background-image: url('Content/img/index/apple-bilgisayar-2.jpg');" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators"
+                        style="background-image: url('Content/img/products/tablet/AP01TA/main.jpg');" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators"
+                        style="background-image: url('Content/img/index/microsoft-oyun.jpg');" data-bs-slide-to="3"
+                        aria-label="Slide 2"></button>
+            </div>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('Content/img/index/samsung-telefon-2.jpg');">
+                <div class="container">
+                    <h2>Samsung Note 20 Ultra 256GB Akıllı Telefon Mistik Bronz</h2>
+                    <p>
+                        Samsung Galaxy dünyasının stil sahibi, güçlü ve çok yönlü üyesi Samsung Galaxy Note20 Ultra ile tanışın!
+                    </p>
+                    <div class="float-right">
+                        <a href="/telefon/sam01pho/24" class="button button-offer button-partner">KAMPANYAYA GİT</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('Content/img/index/apple-bilgisayar-2.jpg');">
+                <div class="container">
+                    <h2>Macbook Air MGN63TU/A Ssd-Retina-13.3"</h2>
+                    <p>
+                        En ince ve en hafif dizüstü bilgisayarlardan biri olan MacBook Air bilgisayarındaki indirim sizleri beklemektedir.
+                    </p>
+                    <div class="float-right">
+                        <a href="/bilgisayar/ap01co/3" class="button button-offer button-partner">KAMPANYAYA GİT</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('Content/img/index/apple-tablet-3.jpeg');">
+                <div class="container">
+                    <h2>Ipad Mini 6.Nesil 64GB WIFI Retina Ekran iPadOS Tablet</h2>
+                    <p>
+                        Ipad Mini 6.Nesil gelişmiş özellikleri ve küçük boyutu ile adeta bir performans cihazıdır.
+                    </p>
+                    <div class="float-right">
+                        <a href="/tablet/app01ta/18" class="button button-offer button-partner">KAMPANYAYA GİT</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('Content/img/index/microsoft-oyun.jpg');">
+                <div class="container">
+                    <h2>Microsoft Xbox Wireless Oyun Kumanda Mavi (9. Nesil)</h2>
+                    <p>
+                        Oyun sırasında yüksek konfor için şık ve iyileştirilmiş geometrik yüzeylere sahip Xbox Kablosuz Oyun Kumandası - Shock Blue'in modern tasarımını deneyimleyin.
+                    </p>
+                    <div class="float-right">
+                        <a href="/oyun/mic02ga/15" class="button button-offer button-partner">KAMPANYAYA GİT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Slider End -->
+<!-- Product Card Slider Start -->
+<section id="daily-products">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="product-card-title mb-3">Günün Fırsat Ürünleri</h3>
+            </div>
+        </div>
+        <div class="row owl-carousel owl-theme">
+            @Html.Action("OppurtunityProducts", "Home")
+        </div>
+    </div>
+</section>
+<!-- Product Card Slider End -->
+<!-- Commerce Details Start -->
+<section id="commerce-detail">
+    <div class="container">
+        <div class="row" style="justify-content: center;">
+            <div class="col-md-6 col-lg-4">
+                <div class="commerce-detail-cont mb-40-manuel">
+                    <div class="icon-box"><i class="fas fa-exchange" style="font-size: 5rem;"></i></div>
+                    <p class="commerce-detail-text">
+                        Kullanıcılar Arası <span style="color: #ED2846 !important;">Para Transferi</span> Sağlamaktayız
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="commerce-detail-cont mb-40-manuel">
+                    <div class="icon-box"><i class="fas fa-money-check" style="font-size: 5rem;"></i></div>
+                    <p class="commerce-detail-text">
+                        Bakiye Sistemi İle Sepette <span style="color: #ED2846 !important;">Ödeme Avantajı</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="commerce-detail-cont">
+                    <div class="icon-box"><i class="fas fa-user-shield" style="font-size: 5rem;"></i></div>
+                    <p class="commerce-detail-text">
+                        <span style="color: #ED2846 !important;">Yüz Tanıma</span> İle Siteye Güvenli Giriş
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Commerce Details End-->
+<!-- Discover Start -->
+<section id="discover">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <h3 class="product-card-title">Keşfet</h3>
+            </div>
+        </div>
+        <div class="row">
+            @Html.Action("RandomProducts", "Home")
+        </div>
+    </div>
+</section>
+<!-- Discover End -->

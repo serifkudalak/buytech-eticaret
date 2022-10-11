@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Buytech.Eticaret.Core.Model.Entity.Contact>
+
+<h2>Kullanıcı Mesajları</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Ad Soyad
+                </th>
+                <th>
+                    E-mail
+                </th>
+                <th>
+                    Telefon
+                </th>
+                <th>
+                    Konu
+                </th>
+                <th>
+                    Mesaj Tarihi
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameSurname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @item.CreateDate.ToString("dd.MM.yyyy HH:mm")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detay", "Details", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

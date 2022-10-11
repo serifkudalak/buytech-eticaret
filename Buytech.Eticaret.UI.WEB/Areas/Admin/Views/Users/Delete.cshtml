@@ -1,0 +1,141 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.User
+
+<h2>Kullanıcı Sil</h2>
+
+<h3>Silmek istediğinize emin misiniz?</h3>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Ad Soyad
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameSurname)
+        </dd>
+
+        <dt>
+            Tc No
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GlobalNumber)
+        </dd>
+
+        <dt>
+            E-Mail
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Şehir
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            İlçe
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Town)
+        </dd>
+
+        <dt>
+            Adres
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            Posta Kodu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostalCode)
+        </dd>
+
+        <dt>
+            Telefon
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            Parola
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            Transfer Kimliği
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransferNumber)
+        </dd>
+
+        <dt>
+            Fotoğraf
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo)
+        </dd>
+
+        <dt>
+            Bakiye
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Balance)
+        </dd>
+
+        <dt>
+            Aktiflik
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            Kayıt Tarihi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            Güncelleme Tarihi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Geri Dön", "Index")
+        </div>
+    }
+</div>

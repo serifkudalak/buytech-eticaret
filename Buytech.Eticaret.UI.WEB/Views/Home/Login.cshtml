@@ -1,0 +1,76 @@
+﻿@section Script {
+    <script defer src="~/Content/js/face-api.min.js"></script>
+    <script defer src="~/Content/js/login.js"></script>
+}
+
+<!-- Login Start -->
+<div class="login-title" style="padding-top: 2rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center" style="font-weight: bold; color: #ED2846;">GİRİŞ YAP</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="login" style="padding-top: 2rem !important;">
+    <div class="container">
+        <form autocomplete="off" method="post" action="/giris-yap">
+            <div class="row" style="justify-content:  center; align-items: center;">
+                <div class="col-lg-5">
+                    <div class="camera-box">
+                        <video id="video" width="100%" height="100%" autoplay muted></video>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" class="form-manuel" id="email" name="Email" required readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Parola</label>
+                        <div class="inputBox">
+                            <input type="password" class="form-manuel form-password" id="password" name="Password" required>
+                            <div id="toggle-icon"><i id="password-toggle" class="eye-icon fas fa-eye" onclick="showHide();"></i></div>
+                        </div>
+                        @{
+                            if (ViewBag.Err != null)
+                            {
+                                <div class="alert alert-danger mt-2 alert-dismissible fade show" role="alert">
+                                    @ViewBag.Err
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-login">Giriş Yap</button>
+                    </div>
+                    <div class="text-center">
+                        <a href="register.html" class="btn-register">Kayıt Ol ve Alışverişe Başla</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- Login End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        const password = document.getElementById('password');
+
+        function showHide() {
+            if (password.type == 'password') {
+                password.setAttribute('type', 'text');
+                document.getElementById("password-toggle").classList.add('fa-eye-slash');
+                document.getElementById("password-toggle").classList.remove('fa-eye');
+            }
+            else {
+                password.setAttribute('type', 'password');
+                document.getElementById("password-toggle").classList.add('fa-eye');
+                document.getElementById("password-toggle").classList.remove('fa-eye-slash');
+            }
+        }
+    </script>
+}

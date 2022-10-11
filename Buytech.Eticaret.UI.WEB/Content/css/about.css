@@ -1,0 +1,187 @@
+.main-list ul li {
+    display: block;
+    padding: 1.3rem 0;
+    width: 70%;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+.main-list ul li:first-child {
+    padding-top: 0 !important;
+}
+
+.main-list ul li a {
+    color: black !important;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.main-list ul li a.active {
+    color: #ED2846 !important;
+}
+
+.main-detail h2 {
+    font-weight: 900;
+    color: #ED2846;
+    margin-bottom: 20px;
+}
+
+.main-detail h4 {
+    font-weight: 900;
+    color: #ED2846;
+    font-size: 1.7rem;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.main-detail p {
+    font-size: 1.4rem;
+    color: black;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.dropdown-container {
+    position: relative;
+    width: 300px;
+ }
+
+ .down-icon {
+     position: absolute;
+     top: 50%;
+     right: 20px;
+     font-size: 1.3rem;
+     transform: translateY(-50%);
+     color: black;
+ }
+
+  .dropdown-container .dropdown-tgg {
+    color: #000000;
+    padding: 15px 20px;
+    border: none;
+    outline: none;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 1),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.05),
+    inset -4px -4px 10px rgba(255, 255, 255, 1),
+    4px 4px 10px rgba(0, 0, 0, 0.05) !important;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+  }
+  
+  .dropdown-container .dropdown-mn {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+    background-color: #fff;
+  }
+
+  .dropdown-container .dropdown-mn ul {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 1),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.05),
+    inset -4px -4px 10px rgba(255, 255, 255, 1),
+    4px 4px 10px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .dropdown-container .dropdown-mn a {
+    display: block;
+    color: #000000;
+    padding: 15px 20px;
+    font-weight: bold;
+  }
+
+  .dropdown-container .dropdown-tgg .active {
+      color: #ED2846;
+  }
+
+  .dropdown-open .dropdown-mn.dropdown-active {
+    display: block;
+  }
+
+.d-block-992 {
+    display: none;
+}
+
+.d-none-992 {
+    display: block;
+}
+
+@media screen and (max-width: 1200px) {
+    .main-list ul li {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .d-block-992 {
+        display: block;
+    }
+
+    .d-none-992 {
+        display: none;
+    }
+
+    .dropdown-box {
+        margin-bottom: 40px;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .main-detail p {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .dropdown-container {
+        width: 270px;
+     }
+
+     .dropdown-container .dropdown-mn a {
+        font-size: .8rem;
+      }
+
+      .dropdown-container .dropdown-tgg .active {
+        font-size: .8rem;
+    }
+
+    .down-icon {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .dropdown-container {
+        width: 240px;
+     }
+
+     .dropdown-container .dropdown-mn a {
+        font-size: .7rem;
+      }
+
+      .dropdown-container .dropdown-tgg .active {
+        font-size: .7rem;
+    }
+
+    .down-icon {
+        font-size: .9rem;
+    }
+
+    .main-detail p {
+        font-size: 1rem;
+    }
+
+    .main-detail h2 {
+        font-size: 1.5rem;
+    }
+    
+    .main-detail h4 {
+        font-size: 1.4rem;
+    } 
+}

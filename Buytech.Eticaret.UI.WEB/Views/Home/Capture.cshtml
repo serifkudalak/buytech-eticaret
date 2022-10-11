@@ -1,0 +1,58 @@
+﻿<!-- Register Start -->
+<div class="register-title" style="padding-top: 2rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center" style="font-weight: bold; color: #ED2846;">KAYIT OL</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="register" style="padding-top: 2rem !important;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-4">
+                    <div class="camera-box" id="webcam" style="margin: 0 auto;"></div>
+                    <img id="imgCapture" class="d-none"/>
+                </div>
+                <div class="mb-3">
+                    <input type="button" id="btnCapture" class="btn btn-photo" value="Fotoğraf Çek"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Register End -->
+
+@section Script2 {
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="~/Webcam_Plugin/WebCam.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            Webcam.set({
+                image_format: 'jpeg',
+                width: 400,
+                height: 400,
+                jpeg_quality: 90
+            });
+            Webcam.attach('#webcam');
+            $("#btnCapture").click(function () {
+                Webcam.snap(function (data_uri) {
+                    $("#imgCapture")[0].src = data_uri;
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/fotograf-yakala",
+                    data: "{data: '" + $("#imgCapture")[0].src + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) { }
+                });
+
+                window.location.href = "/";
+            });
+        });
+    </script>
+}

@@ -1,0 +1,40 @@
+﻿@model Stripe.Checkout.Session
+
+@section Style{
+    <link rel="stylesheet" href="~/Content/css/basket.css">
+}
+
+@section Script {
+    <script src="https://js.stripe.com/v3/"></script>
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <h1 style="font-weight: 900; font-size: 2rem;">Bakiye Ödeme</h1>
+            </div>
+            <div class="col-md-12">
+                <button class="btn-form-basket" id="btnPay">
+                    Ödeme Tamamla
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Script2 {
+    <script>
+        var stripe = Stripe('pk_test_51Kae7mGFvunKEL77Llnumfpl9ffFGvgP0hlxqfDOTJTVLAZ66nV2rAuVikQYg1cj4hXmYivWZBemVCIiYrFE2BtJ00qFWDYyJv');
+
+        var element = document.getElementById('btnPay');
+
+        element.addEventListener('click', function () {
+            stripe.redirectToCheckout({
+                sessionId: '@Model.Id'
+            }).then(function (result) {
+
+            });
+        });
+    </script>   
+}

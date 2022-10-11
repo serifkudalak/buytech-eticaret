@@ -1,0 +1,77 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.Order
+
+<h2>Sipariş Detayları</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Sipariş Durumu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.Name)
+        </dd>
+
+        <dt>
+            Ad Soyad
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.NameSurname)
+        </dd>
+
+        <dt>
+            Toplam Ürün Fiyatı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalProductPrice)
+        </dd>
+
+        <dt>
+            Toplam Vergi Fiyatı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalTaxPrice)
+        </dd>
+
+        <dt>
+            Toplam İndirim Fiyatı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalDiscount)
+        </dd>
+
+        <dt>
+            Toplam Fiyat
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            Kayıt Tarihi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            Güncelleme Tarihi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Geri Dön", "Index")
+</p>

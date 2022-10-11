@@ -1,0 +1,87 @@
+﻿@model List<Buytech.Eticaret.Core.Model.Entity.Order>
+
+@section Style {
+    <link rel="stylesheet" href="~/Content/css/basket.css">
+}
+
+<!-- Basket Start -->
+<section id="basket" class="cover">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <h3 style="font-weight: 900;">Siparişlerim</h3>
+                <p>(Sipariş İptal Etmek İçin İletişime Geçin)</p>
+            </div>
+            <div class="col-md-12">
+                @if (ViewBag.Result == 0)
+                {
+                    <p class="basket-box" style="font-size: 1.6rem; font-weight: 900; text-align: center;">Henüz Siparişiniz Yok!</p>
+                }
+                else
+                {
+                    <form action="#" class="form">
+                        <!-- Steps -->
+                        <div class="form-step form-step-active">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 mb-manuel-992">
+                                    <div class="basket-box">
+                                        <div class="basket-body">
+                                            <div class="table-wrapper-2">
+                                                <div class="scrollable-2">
+                                                    <table class="products-order">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>İsim Soyisim</th>
+                                                                <th>E-mail</th>
+                                                                <th>Telefon No</th>
+                                                                <th>Sipariş Tarihi</th>
+                                                                <th>Ödeme Türü</th>
+                                                                <th>Sipariş Durum</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.User.NameSurname</td>
+                                                                    <td>@item.User.Email</td>
+                                                                    <td>@item.User.Phone</td>
+                                                                    <td>@item.CreateDate.ToString("dd.MM.yyyy")</td>
+                                                                    @if (item.OrderPayments.FirstOrDefault().OrderType.ToString() == "Havale")
+                                                                    {
+                                                                        <td>Havale</td>
+                                                                    }
+                                                                    else if (item.OrderPayments.FirstOrDefault().OrderType.ToString() == "KrediKarti")
+                                                                    {
+                                                                        <td>Kredi Kartı</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>Bakiye</td>
+                                                                    }
+                                                                    @if (item.Status.Name == "İptal Edildi")
+                                                                    {
+                                                                        <td style="color: red !important;">@item.Status.Name</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td style="color: green !important;">@item.Status.Name</td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Basket End -->

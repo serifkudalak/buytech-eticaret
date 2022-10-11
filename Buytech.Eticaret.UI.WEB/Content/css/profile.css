@@ -1,0 +1,169 @@
+.address-detail-box .form-manuel, .price-detail-box .form-manuel {
+    background: transparent !important;
+    padding: 0 20px;
+    width: 100%;
+    height: 48px;
+    border: none;
+    outline: none;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 1),
+                inset 4px 4px 10px rgba(0, 0, 0, 0.05),
+                inset -4px -4px 10px rgba(255, 255, 255, 1),
+                4px 4px 10px rgba(0, 0, 0, 0.05) !important;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.address-detail-box .form-label, .price-detail-box .form-label {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+
+.address-detail-box textarea {
+    height: 145px !important;
+    resize: none;
+    padding: 10px 20px !important;
+}
+
+.address-detail-box .btn-save{
+    display: inline-block;
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    background-color: #ED2846;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
+    border-radius: 0 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.inputBox {
+    position: relative;
+    height: 48px;
+}
+
+.inputBox .form-password {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.inputBox .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: rgb(0 0 0 / 25%);
+}
+
+.profile-photograph {
+    margin-bottom: 25px;
+}
+ 
+.profile-photograph .img-box {
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
+    width: 250px;
+    height: 250px;
+}
+
+.balance-box {
+    margin-bottom: 35px;
+}
+
+.balance-box h4, .transfer-id h4 {
+    font-weight: 900;
+    font-size: 1.3rem;
+}
+
+.balance-box .btn-balance {
+    display: inline-block;
+    padding: 10px 0;
+    width: 82%;
+    text-align: center;
+    background-color: #ED2846;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
+    border-radius: 0 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.balance-box p, .transfer-id p {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.balance-box p {
+    margin-bottom: 15px !important;
+}
+
+@media screen and (max-width: 1200px) {
+    .profile-photograph .img-box {
+        width: 180px;
+        height: 180px;
+    }
+
+    .balance-box h4, .transfer-id h4 {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .profile-photograph .img-box {
+        width: 280px;
+        height: 280px;
+        margin: 0 auto;
+    }
+
+    .text-align-992-manuel-center {
+        text-align: center;
+    }
+
+    .balance-box .btn-balance {
+        width: 40%;
+    }
+
+    .profile-mb-992-manuel {
+        margin-bottom: 50px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .balance-box .btn-balance {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .balance-box .btn-balance {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .balance-box .btn-balance {
+        width: 80%;
+    }
+
+    .balance-box h4, .transfer-id h4 {
+        font-size: 1rem;
+    }
+
+    .balance-box p, .transfer-id p {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .profile-photograph .img-box {
+        width: 220px;
+        height: 220px;
+    }
+}

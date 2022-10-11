@@ -1,0 +1,80 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.User
+
+@section Style {
+    <link rel="stylesheet" href="~/Content/css/load-money.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+}
+
+@section Script {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+}
+
+<!-- Load Money Start -->
+<section id="load-money">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-12 mb-4">
+                <h3 class="load-money-title">Bakiye Yükleme Ekranı</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="load-money-box">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="load-money">
+                                <h4>Mevcut Bakiyeniz</h4>
+                                @{
+                                    if (Model.Balance == 0)
+                                    {
+                                        <p>0TL</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@Model.Balance.ToString("##,##TL")</p>
+                                    }
+                                }
+                                <form method="post" autocomplete="off">
+                                    <div class="mb-4">
+                                        <input type="text" class="form-manuel" id="moneyValue" name="moneyValue" placeholder="Tutar Giriniz">
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="button" class="btn btn-load locationBtn">Yükle</button>
+                                        <span class="load-money-detail">
+                                            Bakiye İle Yapılan Her Ödemede
+                                            KDV’nin <span>%50</span>’si İndirilmektedir.
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="detail-text-box">
+                                <h2><span class="title-black">Bakiye</span> Yükleyerek Alışverişe Hemen Başlayabilirsiniz.</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Load Money End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        $("body").on("click", ".locationBtn", function () {
+            var value = $('#moneyValue').val();
+
+            if (parseFloat(value) == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lütfen Miktar Belirtiniz!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+            else {
+                window.location.href = "/bakiye-odeme-tamamla/m/b/c/" + value + "";
+            }
+        });
+    </script>
+
+}

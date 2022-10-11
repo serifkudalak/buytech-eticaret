@@ -1,0 +1,165 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.Product
+
+@section Style {
+    <link rel="stylesheet" href="~/Content/css/product-detail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+}
+
+@section Script {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+}
+
+<!-- Prodcuct Detail Start -->
+<section id="product-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-wrapper">
+                    <div class="scrollable">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr class="text-center">
+                                    <th>Görsel</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Fiyat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td>
+                                        <img src="~/Content/img/products/@Model.Category.Name.Replace(" ", "_").ToLower()/@Model.Model/main.jpg"
+                                             style="width: 100px; height: 100px; vertical-align: middle;">
+                                    </td>
+                                    <td style="font-size: 1rem; font-weight: 800; vertical-align: middle; width: 700px;">
+                                        @Model.Name
+                                    </td>
+                                    @{
+                                        if (Model.IsOpportunity == true)
+                                        {
+                                            <td style="font-size: 1rem; font-weight: 800; vertical-align: middle;">
+                                                @Model.Discount.ToString("##,##TL")
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td style="font-size: 1rem; font-weight: 800; vertical-align: middle;">
+                                                @Model.Price.ToString("##,##TL")
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-top-manuel">
+            <div class="col-md-12">
+                <div class="product-detail-box-body">
+                    <div class="product-detail-p active" id="two-box">
+                        <div class="product-title-2 mb-3">
+                            <h3>Yorum Ekle</h3>
+                            <hr>
+                        </div>
+                        <div class="product-comment">
+                            <div class="comment-add-box mb-5">
+                                <form method="post">
+                                    <div class="star-rating">
+                                        <input id="star-5" type="radio" name="rating" value="5" />
+                                        <label for="star-5" title="5 stars">
+                                            <i class="active fa fa-star" aria-hidden="true"></i>
+                                        </label>
+                                        <input id="star-4" type="radio" name="rating" value="4" />
+                                        <label for="star-4" title="4 stars">
+                                            <i class="active fa fa-star" aria-hidden="true"></i>
+                                        </label>
+                                        <input id="star-3" type="radio" name="rating" value="3" />
+                                        <label for="star-3" title="3 stars">
+                                            <i class="active fa fa-star" aria-hidden="true"></i>
+                                        </label>
+                                        <input id="star-2" type="radio" name="rating" value="2" />
+                                        <label for="star-2" title="2 stars">
+                                            <i class="active fa fa-star" aria-hidden="true"></i>
+                                        </label>
+                                        <input id="star-1" type="radio" name="rating" value="1" />
+                                        <label for="star-1" title="1 star">
+                                            <i class="active fa fa-star" aria-hidden="true"></i>
+                                        </label>
+                                        <input name="rating" type="radio" value="0" checked class="d-none" />
+                                    </div>
+                                    <textarea class="comment-area" id="comment-area" rows="5" placeholder="Yorum yaparak fikirlerinizi bizimle paylaşın."></textarea>
+                                    <div>
+                                        <button type="button" id="btnUpdate" class="btn btn-comment">Yorum Yap</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Detail End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        $("body").on("click", "#btnUpdate", function () {
+            var _comment = {};
+            _comment.Rating = document.querySelector('input[name="rating"]:checked').value;
+            _comment.Comment = $("#comment-area").val();
+
+            if (_comment.Rating != 0 && _comment.Comment != '') {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ProductComment", "Product")',
+                    data: JSON.stringify(_comment),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        if (r) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Yorumunuz Başarıyla Eklendi!',
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Kapat',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Yorumunuz Eklenemedi!',
+                                confirmButtonText: 'Kapat'
+                            })
+                        }
+                    }
+                });
+            }
+            else if (_comment.Rating == 0 && _comment.Comment == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lütfen Alanları Eksiksiz Doldurun!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+            else if (_comment.Rating == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lütfen Yıldız Veriniz!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+            else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lütfen Yorum Yazınız!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+        });
+    </script>
+}

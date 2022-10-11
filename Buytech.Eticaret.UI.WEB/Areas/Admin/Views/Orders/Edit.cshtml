@@ -1,0 +1,104 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.Order
+
+<h2>Sipariş Bilgileri Düzenle</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Ad Soyad</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Sipariş Durumu</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Toplam Ürün Fiyatı</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalProductPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalProductPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Toplam Vergi Fiyatı</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalTaxPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalTaxPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Toplam İndirim Fiyatı</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalDiscount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalDiscount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Toplam Fiyat</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Sipariş Tarihi</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <h6>Güncelleme Tarihi</h6>
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UpdateDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UpdateDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

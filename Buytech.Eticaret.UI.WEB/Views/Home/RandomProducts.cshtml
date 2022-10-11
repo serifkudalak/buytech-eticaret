@@ -1,0 +1,19 @@
+﻿@model List<Buytech.Eticaret.Core.Model.Entity.Product>
+
+@foreach (var item in Model)
+{
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="/@item.Category.Name.Replace(" ","-").ToLower()/@item.Model.ToLower()/@item.ID">
+            <div class="product-item">
+                <div class="discover-img">
+                    <img src="~/Content/img/products/@item.Category.Name.Replace(" ", "_").ToLower()/@item.Model/main.jpg" class="img-fluid d-block mx-auto">
+                </div>
+                <div class="product-body">
+                    <p class="discover-content">@if (item.Name.Length > 27) { @String.Concat(item.Name.Substring(0, 28), "-")} else { @item.Name}</p>
+                    <p class="discover-price">@item.Price.ToString("##,##TL")</p>
+                </div>
+            </div>
+        </a>
+    </div>
+}
+

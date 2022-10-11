@@ -1,0 +1,115 @@
+﻿<!-- Register Start -->
+<div class="register-title" style="padding-top: 2rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center" style="font-weight: bold; color: #ED2846;">KAYIT OL</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="register" style="padding-top: 2rem !important;">
+    <div class="container">
+        <form autocomplete="off" method="post" action="kayit-ol">
+            <div class="row padding-manuel-576" style="justify-content:  center; align-items: center;">
+                <div class="col-md-7 col-lg-5 register-box">
+                    <div class="mb-3">
+                        <label class="form-label">İsim Soyisim</label>
+                        <input type="text" class="form-manuel" id="nameSurname" name="NameSurname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">TC No</label>
+                        <input type="text" class="form-manuel" id="globalNumber" name="GlobalNumber" maxlength="11" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" class="form-manuel" id="email" name="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Parola</label>
+                        <div class="inputBox">
+                            <input type="password" class="form-manuel form-password" id="password" name="Password" required>
+                            <div id="toggle-icon">
+                                <i id="password-toggle" class="eye-icon fas fa-eye"
+                                   onclick="showHide();"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Cep Telefonu</label>
+                        <input type="text" class="form-manuel js-phone" id="phoneNumber" name="Phone"
+                               placeholder="(___) ___ - __ __" required>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-login">Kayıt Ol</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- Register End -->
+
+@section Script2  {
+    <script type="text/javascript">
+        const password = document.getElementById('password');
+
+        function showHide() {
+            if (password.type == 'password') {
+                password.setAttribute('type', 'text');
+                document.getElementById("password-toggle").classList.add('fa-eye-slash');
+                document.getElementById("password-toggle").classList.remove('fa-eye');
+            }
+            else {
+                password.setAttribute('type', 'password');
+                document.getElementById("password-toggle").classList.add('fa-eye');
+                document.getElementById("password-toggle").classList.remove('fa-eye-slash');
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        const isNumericInput = (event) => {
+            const key = event.keyCode;
+            return ((key >= 48 && key <= 57) || // Allow number line
+                (key >= 96 && key <= 105) // Allow number pad
+            );
+        };
+
+        const isModifierKey = (event) => {
+            const key = event.keyCode;
+            return (event.shiftKey === true || key === 35 || key === 36) || // Allow Shift, Home, End
+                (key === 8 || key === 9 || key === 13 || key === 46) || // Allow Backspace, Tab, Enter, Delete
+                (key > 36 && key < 41) || // Allow left, up, right, down
+                (
+                    // Allow Ctrl/Command + A,C,V,X,Z
+                    (event.ctrlKey === true || event.metaKey === true) &&
+                    (key === 65 || key === 67 || key === 86 || key === 88 || key === 90)
+                )
+        };
+
+        const enforceFormat = (event) => {
+            // Input must be of a valid number format or a modifier key, and not longer than ten digits
+            if (!isNumericInput(event) && !isModifierKey(event)) {
+                event.preventDefault();
+            }
+        };
+
+        const formatToPhone = (event) => {
+            if (isModifierKey(event)) { return; }
+
+            const input = event.target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+            const areaCode = input.substring(0, 3);
+            const middle = input.substring(3, 6);
+            const last = input.substring(6, 10);
+
+            if (input.length > 6) { event.target.value = `(${areaCode}) ${middle} - ${last}`; }
+            else if (input.length > 3) { event.target.value = `(${areaCode}) ${middle}`; }
+            else if (input.length > 0) { event.target.value = `(${areaCode}`; }
+        };
+
+        const inputElement = document.getElementById('phoneNumber');
+        inputElement.addEventListener('keydown', enforceFormat);
+        inputElement.addEventListener('keyup', formatToPhone);
+    </script>
+}

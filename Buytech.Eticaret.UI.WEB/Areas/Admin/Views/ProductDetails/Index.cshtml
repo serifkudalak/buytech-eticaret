@@ -1,0 +1,230 @@
+﻿@model IEnumerable<Buytech.Eticaret.Core.Model.Entity.ProductDetail>
+
+<h2>Ürün Detay</h2>
+
+<p>
+    @Html.ActionLink("Ürün Detay Ekle", "Create")
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Ürün Adı
+                </th>
+                <th>
+                    Detay Başlık 1
+                </th>
+                <th>
+                    Detay 1
+                </th>
+                <th>
+                    Detay Başlık 2
+                </th>
+                <th>
+                    Detay 2
+                </th>
+                <th>
+                    Detay Başlık 3
+                </th>
+                <th>
+                    Detay 3
+                </th>
+                <th>
+                    Detay Başlık 4
+                </th>
+                <th>
+                    Detay 4
+                </th>
+                <th>
+                    Detay Başlık 5
+                </th>
+                <th>
+                    Detay 5
+                </th>
+                <th>
+                    Detay Başlık 6
+                </th>
+                <th>
+                    Detay 6
+                </th>
+                <th>
+                    Detay Başlık 7
+                </th>
+                <th>
+                    Detay 7
+                </th>
+                <th>
+                    Detay Başlık 8
+                </th>
+                <th>
+                    Detay 8
+                </th>
+                <th>
+                    Detay Başlık 9
+                </th>
+                <th>
+                    Detay 9
+                </th>
+                <th>
+                    Detay Başlık 10
+                </th>
+                <th>
+                    Detay 10
+                </th>
+                <th>
+                    Detay Başlık 11
+                </th>
+                <th>
+                    Detay 11
+                </th>
+                <th>
+                    Detay Başlık 12
+                </th>
+                <th>
+                    Detay 12
+                </th>
+                <th>
+                    Detay Başlık 13
+                </th>
+                <th>
+                    Detay 13
+                </th>
+                <th>
+                    Detay Başlık 14
+                </th>
+                <th>
+                    Detay 14
+                </th>
+                <th>
+                    Detay Başlık 15
+                </th>
+                <th>
+                    Detay 15
+                </th>
+                <th>
+                    Detay Başlık 16
+                </th>
+                <th>
+                    Detay 16
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle3)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail3)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle4)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail4)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle5)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail5)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle6)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail6)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle7)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail7)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle8)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail8)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle9)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail9)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle10)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail10)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle11)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail11)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle12)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail12)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle13)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail13)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle14)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail14)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle15)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail15)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DetailTitle16)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail16)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Düzenle", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Detay", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Sil", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>

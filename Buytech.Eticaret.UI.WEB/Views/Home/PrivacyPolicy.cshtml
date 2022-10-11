@@ -1,0 +1,128 @@
+﻿@section Style {
+    <link rel="stylesheet" href="~/Content/css/privacy-policy.css">
+}
+
+<!-- Privacy Policy Start -->
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-4">
+                <div class="main-list d-none-992">
+                    <ul>
+                        <li><a href="/hakkimizda">Hakkımızda</a></li>
+                        <li><a href="/gizlilik-politikası" class="active">Gizlilik Politikası</a></li>
+                        <li><a href="/para-transferi-hakkinda">Para Transferi Hakkında</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-box d-block-992">
+                    <div class="dropdown-container">
+                        <div class="dropdown-tgg click-dropdown">
+                            <span class="active">Gizlilik Politikası</span>
+                            <i class="fa-solid fa-angle-down down-icon"></i>
+                        </div>
+                        <div class="dropdown-mn">
+                            <ul>
+                                <li><a href="/hakkimizda">Hakkımızda</a></li>
+                                <li><a href="/para-transferi-hakkinda">Para Transferi Hakkında</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-8">
+                <div class="main-detail">
+                    <h2>GİZLİLİK POLİTİKAMIZ</h2>
+                    <p>buytech olarak siz değerli müşterilerimize daha iyi hizmet verebilmek amacıyla bazı kişisel bilgilerinizi (isim, yaş, adres, ilgi alanlarınız, e-posta vb.) sizlerden talep etmekteyiz. Sadece buytech’e ait sunucularda toplanan bu bilgiler, dönemsel kampanya çalışmaları, müşteri profillerine yönelik özel promosyon faaliyetlerinin kurgulanması ve istenmeyen e-postaların iletilmemesine yönelik müşteri "sınıflandırma” çalışmalarında ve en önemlisi siz değerli müşterilerimize daha iyi hizmet vermek maksadı ile sadece buytech bünyesinde kullanılmaktadır.</p>
+                    <p>buytech olarak alışverişleriniz esnasında ve üyelik formlarından topladığımız bilgileri, siz değerli müşterimizin/üyemizin haberi ya da aksi bir talimatı olmaksızın, üçüncü şahıslarla kesinlikle paylaşmamakta, faaliyet dışı hiçbir nedenle ticari amaçla kullanmamakta ve de satmamaktayız.</p>
+                    <p>Müşteri bilgileri, ancak resmi makamlarca bu bilgilerin talep edilmesi halinde ve yürürlükteki emredici mevzuat hükümleri gereğince resmi makamlara açıklama yapmak zorunda olduğu durumlarda resmi makamlara açıklanabilecektir. Siz değerli Müşterimizin sisteme girdiği tüm bilgilere sadece sizin tarafınızdan ulaşabilmekte ve bu bilgileri sadece siz değerli Müşterimiz değiştirebilmektesiniz. Bir başkasının bu bilgilere ulaşması ve bunları değiştirmesi mümkün değildir.</p>
+                    <p>buytech Ödeme sayfasında istenen kredi kartı bilgileriniz, siteden alışveriş yapan siz değerli müşterilerimizin güvenliğini en üst seviyede tutmak amacıyla hiçbir şekilde biz buytech ve bize hizmet veren şirketlerin sunucularında, iş ortaklıklarımızda veya herhangi bir veri havuzunda tutulmamaktadır.</p>
+                    <h5>buytech E-Ticaret</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Privacy Policy End -->
+
+@section Script2 {
+    <script type="text/javascript">
+
+        // Get all the dropdown from document
+        document.querySelectorAll('.dropdown-tgg').forEach(dropDownFunc);
+
+        // Dropdown Open and Close function
+        function dropDownFunc(dropDown) {
+            console.log(dropDown.classList.contains('click-dropdown'));
+
+            if (dropDown.classList.contains('click-dropdown') === true) {
+                dropDown.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    if (this.nextElementSibling.classList.contains('dropdown-active') === true) {
+                        // Close the clicked dropdown
+                        this.parentElement.classList.remove('dropdown-open');
+                        this.nextElementSibling.classList.remove('dropdown-active');
+
+                    } else {
+                        // Close the opend dropdown
+                        closeDropdown();
+
+                        // add the open and active class(Opening the DropDown)
+                        this.parentElement.classList.add('dropdown-open');
+                        this.nextElementSibling.classList.add('dropdown-active');
+                    }
+                });
+            }
+
+            if (dropDown.classList.contains('hover-dropdown') === true) {
+
+                dropDown.onmouseover = dropDown.onmouseout = dropdownHover;
+
+                function dropdownHover(e) {
+                    if (e.type == 'mouseover') {
+                        // Close the opend dropdown
+                        closeDropdown();
+
+                        // add the open and active class(Opening the DropDown)
+                        this.parentElement.classList.add('dropdown-open');
+                        this.nextElementSibling.classList.add('dropdown-active');
+
+                    }
+
+                    // if(e.type == 'mouseout'){
+                    //     // close the dropdown after user leave the list
+                    //     e.target.nextElementSibling.onmouseleave = closeDropdown;
+                    // }
+                }
+            }
+
+        };
+
+
+        // Listen to the doc click
+        window.addEventListener('click', function (e) {
+
+            // Close the menu if click happen outside menu
+            if (e.target.closest('.dropdown-container') === null) {
+                // Close the opend dropdown
+                closeDropdown();
+            }
+
+        });
+
+
+        // Close the openend Dropdowns
+        function closeDropdown() {
+            console.log('run');
+
+            // remove the open and active class from other opened Dropdown (Closing the opend DropDown)
+            document.querySelectorAll('.dropdown-container').forEach(function (container) {
+                container.classList.remove('dropdown-open')
+            });
+
+            document.querySelectorAll('.dropdown-mn').forEach(function (menu) {
+                menu.classList.remove('dropdown-active');
+            });
+        }
+    </script>
+}

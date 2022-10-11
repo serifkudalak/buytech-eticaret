@@ -1,0 +1,100 @@
+﻿@section Style{
+    <link rel="stylesheet" href="~/Content/css/product.css"/>
+}
+
+@model List<Buytech.Eticaret.Core.Model.Entity.Product>
+ 
+<!-- Product Start -->
+<section id="products">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <h2 class="products-title">@ViewBag.Title</h2>
+            </div>
+        </div>
+        <div class="row mb-4" style="align-items: center;">
+            <div class="col-sm-12 mb-3 col-md-12">
+                <p class="products-detail">@ViewBag.Title kategorisinde <span>@Model.Where(p => p.Category.Name == @ViewBag.Title).Count()</span> ürün bulunmaktadır.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form autocomplete="off">
+                    <div class="brand-box mb-4">
+                        <div class="title-box">
+                            <h3>Marka</h3>
+                        </div>
+                        <div class="body-list">
+                            @foreach (var item in ViewBag.Brand)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="@item" id="@item" name="brand">
+                                    <label class="form-check-label" for="@item">
+                                        @item
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="price-box mb-4">
+                        <div class="title-box">
+                            <h3>Fiyat Aralığı</h3>
+                        </div>
+                        <div class="body-list">
+                            <div class="d-flex">
+                                <div>
+                                    <input type="text" class="form-manuel" id="minPrice" name="minPrice" placeholder="Min Tutar">
+                                </div>
+                                <div>
+                                    <input type="text" class="form-manuel" id="maxPrice" name="maxPrice" placeholder="Max Tutar">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-box mb-4">
+                        <input type="submit" class="btn btn-filter" value="ÜRÜN FİLTRELE">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-manuel col-md-6 mb-4">
+                            <div class="product-item">
+                                <div class="product-img">
+                                    <img src="~/Content/img/products/@item.Category.Name.Replace(" ","_").ToLower()/@item.Model/main.jpg" class="img-fluid d-block mx-auto">
+                                </div>
+                                <div class="product-body">
+                                    <span class="product-id">@item.Model</span>
+                                    <p class="content">
+                                        @if (item.Name.Length > 40)
+                                        {@String.Concat(item.Name.Substring(0, 41), "-")}
+                                    else
+                                    { @item.Name}
+                                    </p>
+
+                                    @if (item.IsOpportunity == true)
+                                    {
+                                        <div style="margin-bottom: 1rem;">
+                                            <span class="discount-price">@item.Discount.ToString("##,##TL")</span>
+                                            <span class="old-price">@item.Price.ToString("##,##TL")</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="price">@item.Price.ToString("##,##TL")</p>
+                                    }
+                                </div>
+                                <div class="product-footer">
+                                    <a href="/@item.Category.Name.Replace(" ", "-").ToLower()/@item.Model/@item.ID" class="product-button">Ürün İncele</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product End -->

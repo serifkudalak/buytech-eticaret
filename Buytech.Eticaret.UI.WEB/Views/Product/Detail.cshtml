@@ -1,0 +1,520 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.ProductAllDetails
+
+@section Style {
+    <link rel="stylesheet" href="~/Content/css/product-detail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+}
+
+@section Script {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+}
+
+@{
+    var userDetail = Session["LoginUser"] as Buytech.Eticaret.Core.Model.Entity.User;
+}
+
+<!-- Prodcuct Detail Start -->
+<section id="product-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-6 mb-4">
+                <div class="product-box">
+                    <div class="product-main-image">
+                        <img id="main-img" src="~/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/@Model.ProductImages.First().Image1">
+                    </div>
+                    <div class="product-other-images">
+                        <div id="thumb_img">
+                            @if (Model.ProductImages.First().Image1 != null)
+                            {<img src="~/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-1.jpg" onclick="changeimg('/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-1.jpg',this);">}
+                            @if (Model.ProductImages.First().Image2 != null)
+                            {<img src="~/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-2.jpg" onclick="changeimg('/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-2.jpg',this);">}
+                            @if (Model.ProductImages.First().Image3 != null)
+                            {<img src="~/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-3.jpg" onclick="changeimg('/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-3.jpg',this);">}
+                            @if (Model.ProductImages.First().Image4 != null)
+                            {<img src="~/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-4.jpg" onclick="changeimg('/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-4.jpg',this);">}
+                            @if (Model.ProductImages.First().Image5 != null)
+                            {<img src="~/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-5.jpg" onclick="changeimg('/Content/img/products/@Model.Products.Category.Name.Replace(" ", "_").ToLower()/@Model.Products.Model/photo-5.jpg',this);">}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 mb-4">
+                <div class="product-detail-box">
+                    <div class="product-detail-top">
+                        @if (Model.Products.Stock <= 0)
+                        {
+                            <span class="product-stock stock-danger" id="stock" title="Tükendi">Tükendi</span>
+                        }
+                        else if (Model.Products.Stock < 10)
+                        {
+                            <span class="product-stock stock-warning" id="stock" title="Son @Model.Products.Stock Ürün">Son @Model.Products.Stock Ürün</span>
+                        }
+                        else
+                        {
+                            <span class="product-stock stock-success" id="stock" title="Stokta">Stokta</span>
+                        }
+                        <div class="star-box">
+                            <div class="product-star">
+                                @{
+                                    int ratingTotal = Model.ProductComments.Where(p => p.ProductID == Model.Products.ID).Sum(p => p.Rating);
+                                    int userTotal = Model.ProductComments.Where(p => p.ProductID == Model.Products.ID).Count();
+                                    int ratingNumber;
+
+                                    if (userTotal > 0)
+                                    {
+                                        ratingNumber = ratingTotal / userTotal;
+                                    }
+                                    else
+                                    {
+                                        ratingNumber = 0;
+                                    }
+
+                                    int maxRating = 5;
+
+                                    for (int i = 1; i <= ratingNumber; i++)
+                                    {
+                                        <i class="fa-solid fa-star star-icon"></i>
+                                    }
+
+                                    maxRating -= ratingNumber;
+
+                                    for (int j = 1; j <= maxRating; j++)
+                                    {
+                                        <i class="far fa-star star-icon"></i>
+                                    }
+
+                                }
+
+                            </div>
+                            <span class="product-comment">@String.Concat("(", Model.ProductComments.Count(), ")")</span>
+                        </div>
+                    </div>
+                    <form method="post">
+                        <div class="product-detail-body">
+                            <span class="product-id">@Model.Products.Model</span>
+                            <h3 class="product-name">@Model.Products.Name</h3>
+                            <div class="price-count-box">
+                                @if (Model.Products.IsOpportunity == true)
+                                {
+                                    <span class="product-discount-price">@Model.Products.Discount.ToString("##,##TL")</span>
+                                    <span class="product-old-price">@Model.Products.Price.ToString("##,##TL")</span>
+                                }
+                                else
+                                {
+                                    <span class="product-price">@Model.Products.Price.ToString("##,##TL")</span>
+                                }
+                                <div class="increase-decrease">
+                                    <div class="increase-decrease-flex">
+                                        <div class="value-button" id="decrease" onclick="decreaseValue()"
+                                             value="Decrease Value">-</div>
+                                        <input class="increase-decrease-number" type="number" id="number" name="number" value="1" min="1" />
+                                        <div class="value-button" id="increase" onclick="increaseValue()"
+                                             value="Increase Value">+</div>
+                                    </div>
+                                    <input type="hidden" id="stockValue" value="@Model.Products.Stock" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-detail-footer">
+                            @if (Session["LoginUser"] == null)
+                            {
+                                <a href="/giris-yap" class="btn btn-basket" id="btn-disable">
+                                    Sepete Ekle<span>
+                                        (Sepete'e Eklemek İçin Giriş
+                                        Yapınız)
+                                    </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-basket addBasket" id="btn-disable">
+                                    Sepete Ekle
+                                </button>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row m-top-manuel">
+            <div class="col-md-12">
+                <div class="product-detail-box-title mb-4">
+                    <a id="one" class="product-detail-btn">Ürün Hakkında</a>
+                    <a id="two" class="product-detail-btn">Ürün Yorumları <span>@String.Concat("(", Model.ProductComments.Count(), ")")</span></a>
+                </div>
+                <div class="product-detail-box-body">
+                    <div class="product-detail-p active" id="one-box">
+                        <div class="product-title-1 mb-5">
+                            <h3>Ürün Genel Özellikleri</h3>
+                            <hr>
+                        </div>
+                        <div class="product-body-1">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 col-lg-5">
+                                    <table class="product-table">
+                                        @if (Model.ProductDetails.DetailTitle1 != null && Model.ProductDetails.Detail1 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle1</td>
+                                                <td>@Model.ProductDetails.Detail1</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle2 != null && Model.ProductDetails.Detail2 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle2</td>
+                                                <td>@Model.ProductDetails.Detail2</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle3 != null && Model.ProductDetails.Detail3 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle3</td>
+                                                <td>@Model.ProductDetails.Detail3</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle4 != null && Model.ProductDetails.Detail4 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle4</td>
+                                                <td>@Model.ProductDetails.Detail4</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle5 != null && Model.ProductDetails.Detail5 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle5</td>
+                                                <td>@Model.ProductDetails.Detail5</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle6 != null && Model.ProductDetails.Detail6 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle6</td>
+                                                <td>@Model.ProductDetails.Detail6</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle7 != null && Model.ProductDetails.Detail7 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle7</td>
+                                                <td>@Model.ProductDetails.Detail7</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle8 != null && Model.ProductDetails.Detail8 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle8</td>
+                                                <td>@Model.ProductDetails.Detail8</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                                <div class="col-md-12 col-lg-5">
+                                    <table class="product-table">
+                                        @if (Model.ProductDetails.DetailTitle9 != null && Model.ProductDetails.Detail9 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle9</td>
+                                                <td>@Model.ProductDetails.Detail9</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle10 != null && Model.ProductDetails.Detail10 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle10</td>
+                                                <td>@Model.ProductDetails.Detail10</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle11 != null && Model.ProductDetails.Detail11 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle11</td>
+                                                <td>@Model.ProductDetails.Detail11</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle12 != null && Model.ProductDetails.Detail12 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle12</td>
+                                                <td>@Model.ProductDetails.Detail12</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle13 != null && Model.ProductDetails.Detail13 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle13</td>
+                                                <td>@Model.ProductDetails.Detail13</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle14 != null && Model.ProductDetails.Detail14 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle14</td>
+                                                <td>@Model.ProductDetails.Detail14</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle15 != null && Model.ProductDetails.Detail15 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle15</td>
+                                                <td>@Model.ProductDetails.Detail15</td>
+                                            </tr>
+                                        }
+                                        @if (Model.ProductDetails.DetailTitle16 != null && Model.ProductDetails.Detail16 != null)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductDetails.DetailTitle16</td>
+                                                <td>@Model.ProductDetails.Detail16</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-detail-p" id="two-box">
+                        <div class="product-title-2 mb-3">
+                            <h3>Ürün Yorumları</h3>
+                            <hr>
+                        </div>
+                        <div class="product-comment">
+                            @{
+                                if (Session["LoginUser"] != null)
+                                {
+
+                                    string categoryName = Model.Products.Category.Name.Replace(" ", "-").ToLower();
+                                    string categoryNameFirstLetter = Model.Products.Category.Name.Replace(" ", "-").ToLower().Substring(0, 1);
+                                    int productID = Model.Products.ID;
+
+                                    <div class="comment-add-box mb-5">
+                                        <a href="@categoryNameFirstLetter/p/@productID" class="btn btn-comment" style="display: inline-block;">Yorum Yap</a>
+                                    </div>
+                                }
+                            }
+                            <div class="comment-box">
+                                @if (Model.ProductComments.Count() == 0)
+                                {
+                                    <p class="not-comment">Listelenecek Yorum Bulunamadı!</p>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model.ProductComments)
+                                    {
+                                        <div class="comment">
+                                            <div class="user-product-star">
+                                                @{
+                                                    int userProductRating = 5;
+
+                                                    for (int i = 1; i <= item.Rating; i++)
+                                                    {
+                                                        <i class="fa-solid fa-star star-icon"></i>
+                                                    }
+
+                                                    userProductRating -= item.Rating;
+
+                                                    for (int j = 1; j <= userProductRating; j++)
+                                                    {
+                                                        <i class="far fa-star star-icon"></i>
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="comment-text">
+                                                <p>@item.Comment</p>
+                                            </div>
+                                            <div class="comment-footer">
+                                                <div class="user-name">
+                                                    <h4 class="name">
+                                                        @{
+                                                            string[] nameSurname = item.User.NameSurname.Split(' ');
+                                                            string name;
+                                                            string censorLastName = nameSurname[1][0].ToString();
+
+                                                            name = nameSurname[0] + " ";
+
+                                                            for (int j = 0; j < nameSurname[1].Length - 1; j++)
+                                                            {
+                                                                censorLastName += "*";
+                                                            }
+
+                                                            string fullName = name + censorLastName;
+
+                                                            @fullName;
+                                                        }
+                                                    </h4>
+                                                </div>
+                                                <div class="line"></div>
+                                                <div class="date-box">
+                                                    <h4 class="date">@item.Date.ToString("dd.MM.yyyy")</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12 mb-3">
+                <h3 class="product-card-title">Benzer Ürünler</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="similar-product-box">
+                    <div class="row">
+                        @foreach (var item in Model.AllProducts)
+                        {
+                            <div class="col-sm-manuel col-md-6 col-lg-4 mb-4">
+                                <div class="product-item">
+                                    <div class="product-img">
+                                        <img src="~/Content/img/products/@item.Category.Name.Replace(" ","_").ToLower()/@item.Model/main.jpg" class="img-fluid d-block mx-auto">
+                                    </div>
+                                    <div class="product-body">
+                                        <span class="product-id">@item.Model</span>
+                                        <p class="content">
+                                            @if (item.Name.Length > 40)
+                                            {@String.Concat(item.Name.Substring(0, 41), "-")}
+                                        else
+                                        { @item.Name}
+                                        </p>
+
+                                        @if (item.IsOpportunity == true)
+                                        {
+                                            <div style="margin-bottom: 1rem;">
+                                                <span class="discount-price">@item.Discount.ToString("##,##TL")</span>
+                                                <span class="old-price">@item.Price.ToString("##,##TL")</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p class="price">@item.Price.ToString("##,##TL")</p>
+                                        }
+                                    </div>
+                                    <div class="product-footer">
+                                        <a href="/@item.Category.Name.Replace(" ", "-").ToLower()/@item.Model/@item.ID" class="product-button">Ürün İncele</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Detail End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        function changeimg(url, e) {
+            document.getElementById("main-img").src = url;
+            let nodes = document.getElementById("thumb_img");
+            let img_child = nodes.children;
+        }
+    </script>
+
+    <script type="text/javascript">
+        function increaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+        }
+
+        function decreaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            document.getElementById('number').value = value;
+        }
+    </script>
+
+    <script type="text/javascript">
+        $('.product-detail-btn').first().addClass('active');
+
+        $('.product-detail-btn').click(function () {
+            var elClass = $(this).attr('id');
+
+            if (elClass === 'one') {
+                document.getElementById('one-box').classList.add('active');
+                document.getElementById('two-box').classList.remove('active');
+                document.getElementById('one').classList.add('active');
+                document.getElementById('two').classList.remove('active');
+            }
+            else {
+                document.getElementById('two-box').classList.add('active');
+                document.getElementById('one-box').classList.remove('active');
+                document.getElementById('two').classList.add('active');
+                document.getElementById('one').classList.remove('active');
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        var el = document.getElementById('stock');
+        var text = el.getAttribute('title');
+
+        if (text === 'Tükendi') {
+            document.getElementById('btn-disable').setAttribute("disabled", "disabled");
+            document.getElementById('btn-disable').classList.add('disable-btn-manuel');
+        }
+    </script>
+
+    <script type="text/javascript">
+        $("body").on("click", ".addBasket", function () {
+            var _basket = {};
+            _basket.quantity = $('#number').val();
+            var stockValue = $('#stockValue').val();
+            var userBalance = $('#userBalance').val();
+
+            if (parseInt(_basket.quantity) <= parseInt(stockValue) && parseInt(_basket.quantity) != 0) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddBasket", "Product")',
+                    data: JSON.stringify(_basket),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        if (r) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Ürün Sepete Eklendi!',
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Kapat',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ürün Sepete Eklenemedi!',
+                                confirmButtonText: 'Kapat'
+                            })
+                        }
+                    }
+                });
+            }
+            else if (parseInt(_basket.quantity) == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lütfen Alacağınız Adeti Seçin!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+            else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Stoktaki Ürün Yetersiz! Stok Sayısı: ' + stockValue + '',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+        });
+    </script>
+}

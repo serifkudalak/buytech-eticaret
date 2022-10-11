@@ -1,0 +1,131 @@
+﻿@section Style {
+    <link rel="stylesheet" href="~/Content/css/money-transfer-about.css">
+}
+
+<!-- Money Transfer About Start -->
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-4">
+                <div class="main-list d-none-992">
+                    <ul>
+                        <li><a href="/hakkimizda">Hakkımızda</a></li>
+                        <li><a href="/gizlilik-politikasi">Gizlilik Politikası</a></li>
+                        <li><a href="/para-transferi-hakkinda" class="active">Para Transferi Hakkında</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-box d-block-992">
+                    <div class="dropdown-container">
+                        <div class="dropdown-tgg click-dropdown">
+                            <span class="active">Para Transferi Hakkında</span>
+                            <i class="fa-solid fa-angle-down down-icon"></i>
+                        </div>
+                        <div class="dropdown-mn">
+                            <ul>
+                                <li><a href="/hakkimizda">Hakkımızda</a></li>
+                                <li><a href="/gizlilik-politikasi">Gizlilik Politikası</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-8">
+                <div class="main-detail">
+                    <h2>PARA TRANSFERİ HAKKINDA</h2>
+                    <p>Buytech sitemiz bünyesinde bulunan Para Transferi ekranında, herhangi bir bankaya ihtiyaç duymadan, para transferinizi bakiyeniz yeterli olduğu sürece gerçekleştirebilmektesiniz. Bu sayede site içerisinde farklı kullanıcılar arasında daha çabuk para akışı gerçekleştirerek, işlemlerinizi daha hızlı yapabilmektesiniz.</p>
+                    <h4>Para Transferi Nasıl Yapılır?</h4>
+                    <p>Para Transferi ekranında bulunan Transfer Kimliği kısmına parayı göndereceğiniz kullanıcının Transfer Kimliğini(örn: serifx1002534) yazarak ve bakiyeniz yeterli ise göndermek istediğiniz tutarı girdikten sonra Gönder butonuna tıklayıp işleminizi gerçekleştirebilirsiniz.</p>
+                    <h4>Bakiye Yükleme Nasıl Yapılır?</h4>
+                    <p>Bakiye Yükleme sayfasına gittikten sonra karşınıza gelen alana yüklemek istediğiniz tutarı giriniz. Ardından gelen ekranda da kredi kartı bilgilerinizi girerek bakiye yükleme işleminizi gerçekleştirebilirsiniz.</p>
+                    <h4>Bakiye İle Ödeme Avantajı</h4>
+                    <p>Bakiyeniz ile yaptığınız alışverişlerde KDV’nin %50’sinden düşülerek alışverişlerinizi daha avantajlı bir şekilde yapabilirsiniz.</p>
+                    <h5>buytech E-Ticaret</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Money Transfer About End -->
+
+@section Script2 {
+    <script type="text/javascript">
+
+        // Get all the dropdown from document
+        document.querySelectorAll('.dropdown-tgg').forEach(dropDownFunc);
+
+        // Dropdown Open and Close function
+        function dropDownFunc(dropDown) {
+            console.log(dropDown.classList.contains('click-dropdown'));
+
+            if (dropDown.classList.contains('click-dropdown') === true) {
+                dropDown.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    if (this.nextElementSibling.classList.contains('dropdown-active') === true) {
+                        // Close the clicked dropdown
+                        this.parentElement.classList.remove('dropdown-open');
+                        this.nextElementSibling.classList.remove('dropdown-active');
+
+                    } else {
+                        // Close the opend dropdown
+                        closeDropdown();
+
+                        // add the open and active class(Opening the DropDown)
+                        this.parentElement.classList.add('dropdown-open');
+                        this.nextElementSibling.classList.add('dropdown-active');
+                    }
+                });
+            }
+
+            if (dropDown.classList.contains('hover-dropdown') === true) {
+
+                dropDown.onmouseover = dropDown.onmouseout = dropdownHover;
+
+                function dropdownHover(e) {
+                    if (e.type == 'mouseover') {
+                        // Close the opend dropdown
+                        closeDropdown();
+
+                        // add the open and active class(Opening the DropDown)
+                        this.parentElement.classList.add('dropdown-open');
+                        this.nextElementSibling.classList.add('dropdown-active');
+
+                    }
+
+                    // if(e.type == 'mouseout'){
+                    //     // close the dropdown after user leave the list
+                    //     e.target.nextElementSibling.onmouseleave = closeDropdown;
+                    // }
+                }
+            }
+
+        };
+
+
+        // Listen to the doc click
+        window.addEventListener('click', function (e) {
+
+            // Close the menu if click happen outside menu
+            if (e.target.closest('.dropdown-container') === null) {
+                // Close the opend dropdown
+                closeDropdown();
+            }
+
+        });
+
+
+        // Close the openend Dropdowns
+        function closeDropdown() {
+            console.log('run');
+
+            // remove the open and active class from other opened Dropdown (Closing the opend DropDown)
+            document.querySelectorAll('.dropdown-container').forEach(function (container) {
+                container.classList.remove('dropdown-open')
+            });
+
+            document.querySelectorAll('.dropdown-mn').forEach(function (menu) {
+                menu.classList.remove('dropdown-active');
+            });
+        }
+    </script>
+}

@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Buytech.Eticaret.Core.Model.Entity.Category>
+
+@foreach (var item in Model)
+{
+    <li><a href="/@item.Name.Replace(" ", "-").ToLower()/@item.ID">@item.Name</a></li>
+}

@@ -1,0 +1,260 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.User
+
+@section Style {
+    <link rel="stylesheet" href="~/Content/css/profile.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"/>
+}
+
+@section Script {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+}
+
+<!-- Profile Start -->
+<section id="profile">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 text-align-992-manuel-center profile-mb-992-manuel">
+                <div class="profile-photograph">
+                    <div class="img-box"></div>
+                </div>
+                <div class="balance-box">
+                    <h4>Mevcut Bakiyeniz</h4>
+                    @if (Model.Balance != 0)
+                    {
+                        <p>
+                            @Model.Balance.ToString("##,##TL")
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            0TL
+                        </p>
+                    }
+                    <a href="/profilim/bakiye-yukle/d/@Model.TransferNumber/@Model.ID" class="btn-balance">Yükle</a>
+                </div>
+                <div class="transfer-id">
+                    <h4>Transfer Kimliği</h4>
+                    <p>@Model.TransferNumber</p>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <form method="post" id="appointment_form" name="appointment_form">
+                    <div class="address-detail-box">
+                        <div class="row">
+                            <div class="col-lg-6 d-none">
+                                <div class="mb-3">
+                                    <label class="form-label">ID</label>
+                                    <input type="text" class="form-manuel" id="id" name="id" value="@if (!String.IsNullOrEmpty(Model.ID.ToString())) { @Model.ID }">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">İsim Soyisim</label>
+                                    <input type="text" class="form-manuel" id="nameSurname" name="nameSurname" value="@if (!String.IsNullOrEmpty(Model.NameSurname)) { @Model.NameSurname }">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">E-mail</label>
+                                    <input type="email" class="form-manuel" id="email" name="email"
+                                           autocomplete="off" value="@if (!String.IsNullOrEmpty(Model.Email)) { @Model.Email}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Şehir</label>
+                                    <input type="text" class="form-manuel" id="city" name="city" value="@if (!String.IsNullOrEmpty(Model.City)) { @Model.City}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">İlçe</label>
+                                    <input type="text" class="form-manuel" id="town" name="town" value="@if (!String.IsNullOrEmpty(Model.Town)) { @Model.Town}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Adres</label>
+                                    <textarea class="form-manuel" name="address" id="address">@if (!String.IsNullOrEmpty(Model.Address)) { @Model.Address}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Posta Kodu</label>
+                                    <input type="text" class="form-manuel" id="postalCode" name="postalCode" value="@if (!String.IsNullOrEmpty(Model.PostalCode)) { @Model.PostalCode}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Cep Telefonu</label>
+                                    <input type="text" class="form-manuel" id="phoneNumber" name="phoneNumber"
+                                           placeholder="(___) ___ - __ __" value="@if (!String.IsNullOrEmpty(Model.Phone)) { @Model.Phone}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Parola</label>
+                                    <div class="inputBox">
+                                        <input type="password" class="form-manuel form-password" id="password-1"
+                                               name="password-1" value="@if (!String.IsNullOrEmpty(Model.Password)) { @Model.Password}">
+                                        <div id="toggle-icon">
+                                            <i id="password-toggle-1" class="eye-icon fas fa-eye"
+                                               onclick="showHide1();"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-4">
+                                    <label class="form-label">Parola Tekrar</label>
+                                    <div class="inputBox">
+                                        <input type="password" class="form-manuel form-password" id="password-2"
+                                               name="password-2" value="@if (!String.IsNullOrEmpty(Model.Password)) { @Model.Password}">
+                                        <div id="toggle-icon">
+                                            <i id="password-toggle-2" class="eye-icon fas fa-eye"
+                                               onclick="showHide2();"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="button" id="btnUpdate" class="btn btn-save">Kaydet</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Profile End -->
+
+@section Script2 {
+    <script type="text/javascript">
+        const isNumericInput = (event) => {
+            const key = event.keyCode;
+            return ((key >= 48 && key <= 57) || // Allow number line
+                (key >= 96 && key <= 105) // Allow number pad
+            );
+        };
+
+        const isModifierKey = (event) => {
+            const key = event.keyCode;
+            return (event.shiftKey === true || key === 35 || key === 36) || // Allow Shift, Home, End
+                (key === 8 || key === 9 || key === 13 || key === 46) || // Allow Backspace, Tab, Enter, Delete
+                (key > 36 && key < 41) || // Allow left, up, right, down
+                (
+                    // Allow Ctrl/Command + A,C,V,X,Z
+                    (event.ctrlKey === true || event.metaKey === true) &&
+                    (key === 65 || key === 67 || key === 86 || key === 88 || key === 90)
+                )
+        };
+
+        const enforceFormat = (event) => {
+            // Input must be of a valid number format or a modifier key, and not longer than ten digits
+            if (!isNumericInput(event) && !isModifierKey(event)) {
+                event.preventDefault();
+            }
+        };
+
+        const formatToPhone = (event) => {
+            if (isModifierKey(event)) { return; }
+
+            const input = event.target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+            const areaCode = input.substring(0, 3);
+            const middle = input.substring(3, 6);
+            const last = input.substring(6, 10);
+
+            if (input.length > 6) { event.target.value = `(${areaCode}) ${middle} - ${last}`; }
+            else if (input.length > 3) { event.target.value = `(${areaCode}) ${middle}`; }
+            else if (input.length > 0) { event.target.value = `(${areaCode}`; }
+        };
+
+        const inputElement = document.getElementById('phoneNumber');
+        inputElement.addEventListener('keydown', enforceFormat);
+        inputElement.addEventListener('keyup', formatToPhone);
+    </script>
+
+    <script type="text/javascript">
+        const password = document.getElementById('password-1');
+
+        function showHide1() {
+            if (password.type == 'password') {
+                password.setAttribute('type', 'text');
+                document.getElementById("password-toggle-1").classList.add('fa-eye-slash');
+                document.getElementById("password-toggle-1").classList.remove('fa-eye');
+            }
+            else {
+                password.setAttribute('type', 'password');
+                document.getElementById("password-toggle-1").classList.add('fa-eye');
+                document.getElementById("password-toggle-1").classList.remove('fa-eye-slash');
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        const password2 = document.getElementById('password-2');
+
+        function showHide2() {
+            if (password2.type == 'password') {
+                password2.setAttribute('type', 'text');
+                document.getElementById("password-toggle-2").classList.add('fa-eye-slash');
+                document.getElementById("password-toggle-2").classList.remove('fa-eye');
+            }
+            else {
+                password2.setAttribute('type', 'password');
+                document.getElementById("password-toggle-2").classList.add('fa-eye');
+                document.getElementById("password-toggle-2").classList.remove('fa-eye-slash');
+            }
+        }
+    </script>
+
+    <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+
+    <script type="text/javascript">
+        $("body").on("click", "#btnUpdate", function () {
+            var _user = {};
+            _user.ID = $("#id").val();
+            _user.NameSurname = $("#nameSurname").val();
+            _user.Email = $("#email").val();
+            _user.City = $("#city").val();
+            _user.Town = $("#town").val();
+            _user.Address = $("#address").val();
+            _user.PostalCode = $("#postalCode").val();
+            _user.Phone = $("#phoneNumber").val();
+            _user.Password = $("#password-1").val();
+            _user.Password2 = $("#password-2").val();
+
+            if (_user.Password == _user.Password2) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UpdateCustomer", "Home")',
+                    data: JSON.stringify(_user),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        if (r) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Kullanıcı Bilgileri Güncellendi!',
+                                confirmButtonText: 'Kapat'
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Kullanıcı Bilgileri Güncellenemedi!',
+                                confirmButtonText: 'Kapat'
+                            })
+                        }
+                    }
+                });
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Parolalar Eşleşmiyor!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+        });
+    </script>
+}

@@ -1,0 +1,59 @@
+﻿@model Buytech.Eticaret.Core.Model.Entity.Contact
+
+<h2>Kullanıcı Mesaj Detay</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Ad Soyad
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameSurname)
+        </dd>
+
+        <dt>
+            E-mail
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Telefon Numarası
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            Konu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            Mesaj
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            Mesaj Tarihi
+        </dt>
+
+        <dd>
+            @Model.CreateDate.ToString("dd.MM.yyyy HH:mm")
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Geri Dön", "Index")
+</p>
